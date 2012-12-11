@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'CoverFlow11' target in the 'CoverFlow11' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
