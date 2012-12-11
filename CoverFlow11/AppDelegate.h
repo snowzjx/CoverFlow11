@@ -7,7 +7,19 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class CFPopOverViewController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
+{
+    NSStatusItem *statusItem;
+    NSPopover *cfPopOver;
+ 
+    // ViewControllers
+    CFPopOverViewController *cfPopOverViewController;
+}
+
+- (void)menuInit;
+- (void)cfPopOverInit;
+- (void)showCFPopOver:(id)sender;
 
 @end

@@ -13,6 +13,8 @@
 		805D9D8C16777611006E97FE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D8A16777611006E97FE /* Credits.rtf */; };
 		805D9D8F16777611006E97FE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 805D9D8E16777611006E97FE /* AppDelegate.m */; };
 		805D9D9216777611006E97FE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D9016777611006E97FE /* MainMenu.xib */; };
+		80A59D0C16777E2D009E993C /* CFPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A59D0B16777E2D009E993C /* CFPopOverViewController.m */; };
+		80A59D0F16777EC1009E993C /* CFPopOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A59D1116777EC1009E993C /* CFPopOverView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,9 @@
 		805D9D8D16777611006E97FE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		805D9D8E16777611006E97FE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		805D9D9116777611006E97FE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		80A59D0A16777E2D009E993C /* CFPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFPopOverViewController.h; path = Controller/CFPopOverViewController.h; sourceTree = "<group>"; };
+		80A59D0B16777E2D009E993C /* CFPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFPopOverViewController.m; path = Controller/CFPopOverViewController.m; sourceTree = "<group>"; };
+		80A59D1016777EC1009E993C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CFPopOverView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +89,7 @@
 			children = (
 				805D9D8D16777611006E97FE /* AppDelegate.h */,
 				805D9D8E16777611006E97FE /* AppDelegate.m */,
+				80A59D0916777DDA009E993C /* Controller */,
 				80A59D0316777B8C009E993C /* User Interface */,
 				805D9D8216777611006E97FE /* Supporting Files */,
 			);
@@ -106,8 +112,18 @@
 			isa = PBXGroup;
 			children = (
 				805D9D9016777611006E97FE /* MainMenu.xib */,
+				80A59D1116777EC1009E993C /* CFPopOverView.xib */,
 			);
 			name = "User Interface";
+			sourceTree = "<group>";
+		};
+		80A59D0916777DDA009E993C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				80A59D0A16777E2D009E993C /* CFPopOverViewController.h */,
+				80A59D0B16777E2D009E993C /* CFPopOverViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +180,7 @@
 				805D9D8616777611006E97FE /* InfoPlist.strings in Resources */,
 				805D9D8C16777611006E97FE /* Credits.rtf in Resources */,
 				805D9D9216777611006E97FE /* MainMenu.xib in Resources */,
+				80A59D0F16777EC1009E993C /* CFPopOverView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +193,7 @@
 			files = (
 				805D9D8816777611006E97FE /* main.m in Sources */,
 				805D9D8F16777611006E97FE /* AppDelegate.m in Sources */,
+				80A59D0C16777E2D009E993C /* CFPopOverViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +222,14 @@
 				805D9D9116777611006E97FE /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		80A59D1116777EC1009E993C /* CFPopOverView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				80A59D1016777EC1009E993C /* en */,
+			);
+			name = CFPopOverView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
