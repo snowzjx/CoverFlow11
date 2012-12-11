@@ -84,7 +84,7 @@
 			children = (
 				805D9D8D16777611006E97FE /* AppDelegate.h */,
 				805D9D8E16777611006E97FE /* AppDelegate.m */,
-				805D9D9016777611006E97FE /* MainMenu.xib */,
+				80A59D0316777B8C009E993C /* User Interface */,
 				805D9D8216777611006E97FE /* Supporting Files */,
 			);
 			path = CoverFlow11;
@@ -100,6 +100,14 @@
 				805D9D8A16777611006E97FE /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		80A59D0316777B8C009E993C /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				805D9D9016777611006E97FE /* MainMenu.xib */,
+			);
+			name = "User Interface";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +305,7 @@
 				805D9D9716777611006E97FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
