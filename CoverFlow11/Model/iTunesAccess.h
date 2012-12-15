@@ -12,13 +12,15 @@
 @interface iTunesAccess : NSObject
 {
     iTunesApplication *iTunes;
+    iTunesSource *library;
 }
 
 + (iTunesAccess *)sharediTunesAccess;
 
 - (BOOL)isiTunesRunning;
 - (void)runiTunes;
-
-
+- (iTunesTrack *)getCurrentTrack;
+- (iTunesPlaylist *)getCurrentPlayList;
+- (NSArray *)getAlbumsInPlayList:(iTunesPlaylist *) playList;
 
 @end

@@ -7,8 +7,9 @@
 //
 
 #import "CFPopOverViewController.h"
-#import "iTunesAccess.h"
 #import "CFView.h"
+#import "iTunesAccess.h"
+#import "iTunesAlbum.h"
 
 @interface CFPopOverViewController ()
 
@@ -34,7 +35,29 @@
         NSLog(@"CFPopOverViewController - Run iTunes ...");
         [theiTunesAccess runiTunes];
     }
+    iTunesPlaylist *playList = [theiTunesAccess getCurrentPlayList];
+    NSLog(@"CFPopOverViewController - Current PlayList: %@",[playList name]);
+    
+    NSArray *albums = [theiTunesAccess getAlbumsInPlayList:playList];
+    NSLog(@"CFPopOverViewController - Current Albums Are: ");
+    for (iTunesAlbum *album in albums)
+    {
+        NSLog(@"\t%@",[album albumName]);
+    }
+    iTunesTrack * currentTrack = [theiTunesAccess getCurrentTrack];
+    NSLog(@"CFPopOverViewController - Current Track is: %@",[currentTrack name]);
+    [self setUpCFViewWithAlbums:albums andCurrentTrack:currentTrack];
     [cfView setUpLayers];
 }
+
+- (void)setUpCFViewWithAlbums:(NSArray *)albums andCurrentTrack:(iTunesTrack *)track
+{
+    NSLog(@"CFPopOverViewController - Setting date to the CFView ...");
+    
+    
+    
+    NSLog(@"CFPopOverViewController - Data Set Finished.");
+}
+
 
 @end

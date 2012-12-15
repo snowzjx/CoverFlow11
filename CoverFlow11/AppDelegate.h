@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 @class CFPopOverViewController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>

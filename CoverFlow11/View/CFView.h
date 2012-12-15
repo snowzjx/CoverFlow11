@@ -11,7 +11,13 @@
 
 @interface CFView : NSView
 {
+    // Layers
     CALayer *rootLayer;
+    
+    // CATransform3D
+    CATransform3D leftTransform;
+    CATransform3D rightTransform;
+    CATransform3D ceterTransform;
 }
 
 - (void) setUpLayers;

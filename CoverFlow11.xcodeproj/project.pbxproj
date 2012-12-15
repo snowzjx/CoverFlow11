@@ -14,6 +14,9 @@
 		805D9D8C16777611006E97FE /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D8A16777611006E97FE /* Credits.rtf */; };
 		805D9D8F16777611006E97FE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 805D9D8E16777611006E97FE /* AppDelegate.m */; };
 		805D9D9216777611006E97FE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D9016777611006E97FE /* MainMenu.xib */; };
+		80A22D81167C4CB000C66D42 /* PerspectiveTransform3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A22D80167C4CB000C66D42 /* PerspectiveTransform3D.m */; };
+		80A22D84167C62AB00C66D42 /* iTunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A22D83167C62AB00C66D42 /* iTunesAlbum.m */; };
+		80A22D87167C6A5400C66D42 /* CFItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A22D86167C6A5400C66D42 /* CFItemView.m */; };
 		80A59D0C16777E2D009E993C /* CFPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A59D0B16777E2D009E993C /* CFPopOverViewController.m */; };
 		80A59D0F16777EC1009E993C /* CFPopOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A59D1116777EC1009E993C /* CFPopOverView.xib */; };
 		80A59D1516778374009E993C /* iTunesAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A59D1416778374009E993C /* iTunesAccess.m */; };
@@ -36,6 +39,13 @@
 		805D9D8D16777611006E97FE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		805D9D8E16777611006E97FE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		805D9D9116777611006E97FE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		80A22D75167C411F00C66D42 /* CFViewConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CFViewConstant.h; path = View/CFViewConstant.h; sourceTree = "<group>"; };
+		80A22D7F167C4CB000C66D42 /* PerspectiveTransform3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerspectiveTransform3D.h; path = CoverFlow11/Model/PerspectiveTransform3D.h; sourceTree = "<group>"; };
+		80A22D80167C4CB000C66D42 /* PerspectiveTransform3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PerspectiveTransform3D.m; path = CoverFlow11/Model/PerspectiveTransform3D.m; sourceTree = "<group>"; };
+		80A22D82167C62AB00C66D42 /* iTunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iTunesAlbum.h; path = CoverFlow11/Model/iTunesAlbum.h; sourceTree = "<group>"; };
+		80A22D83167C62AB00C66D42 /* iTunesAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iTunesAlbum.m; path = CoverFlow11/Model/iTunesAlbum.m; sourceTree = "<group>"; };
+		80A22D85167C6A5400C66D42 /* CFItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFItemView.h; path = View/CFItemView.h; sourceTree = "<group>"; };
+		80A22D86167C6A5400C66D42 /* CFItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFItemView.m; path = View/CFItemView.m; sourceTree = "<group>"; };
 		80A59D0A16777E2D009E993C /* CFPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFPopOverViewController.h; path = Controller/CFPopOverViewController.h; sourceTree = "<group>"; };
 		80A59D0B16777E2D009E993C /* CFPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFPopOverViewController.m; path = Controller/CFPopOverViewController.m; sourceTree = "<group>"; };
 		80A59D1016777EC1009E993C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CFPopOverView.xib; sourceTree = "<group>"; };
@@ -149,6 +159,10 @@
 				80A59D1616778451009E993C /* iTunes.h */,
 				80A59D1316778374009E993C /* iTunesAccess.h */,
 				80A59D1416778374009E993C /* iTunesAccess.m */,
+				80A22D82167C62AB00C66D42 /* iTunesAlbum.h */,
+				80A22D83167C62AB00C66D42 /* iTunesAlbum.m */,
+				80A22D7F167C4CB000C66D42 /* PerspectiveTransform3D.h */,
+				80A22D80167C4CB000C66D42 /* PerspectiveTransform3D.m */,
 			);
 			name = Model;
 			path = ..;
@@ -159,6 +173,9 @@
 			children = (
 				80E4D14C167B7D68008721AA /* CFView.h */,
 				80E4D14D167B7D68008721AA /* CFView.m */,
+				80A22D85167C6A5400C66D42 /* CFItemView.h */,
+				80A22D86167C6A5400C66D42 /* CFItemView.m */,
+				80A22D75167C411F00C66D42 /* CFViewConstant.h */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -233,6 +250,9 @@
 				80A59D0C16777E2D009E993C /* CFPopOverViewController.m in Sources */,
 				80A59D1516778374009E993C /* iTunesAccess.m in Sources */,
 				80E4D14E167B7D68008721AA /* CFView.m in Sources */,
+				80A22D81167C4CB000C66D42 /* PerspectiveTransform3D.m in Sources */,
+				80A22D84167C62AB00C66D42 /* iTunesAlbum.m in Sources */,
+				80A22D87167C6A5400C66D42 /* CFItemView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
