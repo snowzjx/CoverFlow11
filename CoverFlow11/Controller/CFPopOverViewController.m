@@ -7,6 +7,8 @@
 //
 
 #import "CFPopOverViewController.h"
+#import "iTunesAccess.h"
+#import "CFView.h"
 
 @interface CFPopOverViewController ()
 
@@ -19,9 +21,20 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         NSLog(@"CFPopOverViewController - Initializing CFPopOverViewController ...");
+        theiTunesAccess = [iTunesAccess sharediTunesAccess];
     }
-    
     return self;
+}
+
+- (void)didPopOver
+{
+    NSLog(@"CFPopOverViewController - Will Pop Over ...");
+    if(![theiTunesAccess isiTunesRunning])
+    {
+        NSLog(@"CFPopOverViewController - Run iTunes ...");
+        [theiTunesAccess runiTunes];
+    }
+    [cfView setUpLayers];
 }
 
 @end

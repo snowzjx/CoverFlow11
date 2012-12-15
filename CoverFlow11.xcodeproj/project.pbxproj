@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		800572B6167C26D300054DF7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 800572B5167C26D300054DF7 /* QuartzCore.framework */; };
 		805D9D7C16777610006E97FE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805D9D7B16777610006E97FE /* Cocoa.framework */; };
 		805D9D8616777611006E97FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D8416777611006E97FE /* InfoPlist.strings */; };
 		805D9D8816777611006E97FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 805D9D8716777611006E97FE /* main.m */; };
@@ -15,9 +16,13 @@
 		805D9D9216777611006E97FE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D9016777611006E97FE /* MainMenu.xib */; };
 		80A59D0C16777E2D009E993C /* CFPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A59D0B16777E2D009E993C /* CFPopOverViewController.m */; };
 		80A59D0F16777EC1009E993C /* CFPopOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A59D1116777EC1009E993C /* CFPopOverView.xib */; };
+		80A59D1516778374009E993C /* iTunesAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A59D1416778374009E993C /* iTunesAccess.m */; };
+		80A59D1816778484009E993C /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80A59D1716778484009E993C /* ScriptingBridge.framework */; };
+		80E4D14E167B7D68008721AA /* CFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E4D14D167B7D68008721AA /* CFView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		800572B5167C26D300054DF7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		805D9D7716777610006E97FE /* CoverFlow11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoverFlow11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		805D9D7B16777610006E97FE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		805D9D7E16777610006E97FE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -34,6 +39,12 @@
 		80A59D0A16777E2D009E993C /* CFPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFPopOverViewController.h; path = Controller/CFPopOverViewController.h; sourceTree = "<group>"; };
 		80A59D0B16777E2D009E993C /* CFPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFPopOverViewController.m; path = Controller/CFPopOverViewController.m; sourceTree = "<group>"; };
 		80A59D1016777EC1009E993C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CFPopOverView.xib; sourceTree = "<group>"; };
+		80A59D1316778374009E993C /* iTunesAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iTunesAccess.h; path = CoverFlow11/Model/iTunesAccess.h; sourceTree = "<group>"; };
+		80A59D1416778374009E993C /* iTunesAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iTunesAccess.m; path = CoverFlow11/Model/iTunesAccess.m; sourceTree = "<group>"; };
+		80A59D1616778451009E993C /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iTunes.h; path = CoverFlow11/Model/iTunes.h; sourceTree = "<group>"; };
+		80A59D1716778484009E993C /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		80E4D14C167B7D68008721AA /* CFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFView.h; path = View/CFView.h; sourceTree = "<group>"; };
+		80E4D14D167B7D68008721AA /* CFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFView.m; path = View/CFView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				800572B6167C26D300054DF7 /* QuartzCore.framework in Frameworks */,
+				80A59D1816778484009E993C /* ScriptingBridge.framework in Frameworks */,
 				805D9D7C16777610006E97FE /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				805D9D7B16777610006E97FE /* Cocoa.framework */,
+				800572B5167C26D300054DF7 /* QuartzCore.framework */,
+				80A59D1716778484009E993C /* ScriptingBridge.framework */,
 				805D9D7D16777610006E97FE /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -89,7 +104,9 @@
 			children = (
 				805D9D8D16777611006E97FE /* AppDelegate.h */,
 				805D9D8E16777611006E97FE /* AppDelegate.m */,
+				80A59D1216778347009E993C /* Model */,
 				80A59D0916777DDA009E993C /* Controller */,
+				80E4D14A167B7D49008721AA /* View */,
 				80A59D0316777B8C009E993C /* User Interface */,
 				805D9D8216777611006E97FE /* Supporting Files */,
 			);
@@ -124,6 +141,26 @@
 				80A59D0B16777E2D009E993C /* CFPopOverViewController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		80A59D1216778347009E993C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				80A59D1616778451009E993C /* iTunes.h */,
+				80A59D1316778374009E993C /* iTunesAccess.h */,
+				80A59D1416778374009E993C /* iTunesAccess.m */,
+			);
+			name = Model;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		80E4D14A167B7D49008721AA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				80E4D14C167B7D68008721AA /* CFView.h */,
+				80E4D14D167B7D68008721AA /* CFView.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +231,8 @@
 				805D9D8816777611006E97FE /* main.m in Sources */,
 				805D9D8F16777611006E97FE /* AppDelegate.m in Sources */,
 				80A59D0C16777E2D009E993C /* CFPopOverViewController.m in Sources */,
+				80A59D1516778374009E993C /* iTunesAccess.m in Sources */,
+				80E4D14E167B7D68008721AA /* CFView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

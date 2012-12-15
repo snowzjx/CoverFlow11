@@ -57,6 +57,7 @@
 {
     NSLog(@"AppDelegate - Going to Show CoverFlow11 PopOver ...");
     [cfPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
+    [cfPopOverViewController didPopOver];
 }
 
 @end

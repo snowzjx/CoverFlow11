@@ -7,7 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
+@class iTunesAccess;
+@class CFView;
 
 @interface CFPopOverViewController : NSViewController
+{
+    iTunesAccess *theiTunesAccess;
+    IBOutlet CFView *cfView;
+}
+
+- (void)didPopOver;
 
 @end
