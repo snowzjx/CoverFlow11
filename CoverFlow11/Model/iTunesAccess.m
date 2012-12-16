@@ -86,8 +86,16 @@
         {
             album = [[iTunesAlbum alloc] init];
             [album setAlbumName:[track album]];
-            iTunesArtwork * artWork = [[track artworks] objectAtIndex:0];
-            [album setAlbumArtWork:[artWork data]];
+            NSImage *imageData = nil;
+            for(iTunesArtwork *artWork in [track artworks])
+            {
+                if([artWork exists])
+                {
+                    imageData = [artWork data];
+                    break;
+                }
+            }
+            [album setAlbumArtWork:imageData];
             [album.albumTracks addObject:track];
             [albumDict setValue:album forKey:[track album]];
         }

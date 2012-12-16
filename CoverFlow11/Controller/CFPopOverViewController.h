@@ -17,5 +17,7 @@
 }
 
 - (void)didPopOver;
+- (IBAction)goBtnClick:(id)sender;
+- (IBAction)backBtnClick:(id)sender;
 
 @end

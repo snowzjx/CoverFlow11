@@ -7,9 +7,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
 
 @interface CFItemView : NSView
+{
+    CALayer *rootLayer;
+    CALayer *imageLayer;
+}
 
-@property(strong) NSImage *image;
+- (void)setUpLayers;
+- (void)setImage:(NSImage *)image;
 
 @end
