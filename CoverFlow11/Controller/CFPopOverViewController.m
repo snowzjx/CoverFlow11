@@ -66,7 +66,7 @@
             index = [NSNumber numberWithInt:i];
         }
         CFItemView * itemView = [[CFItemView alloc] initWithFrame:NSMakeRect(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT)];
-        [itemView setUpLayers];
+        [itemView setUp];
         [itemView setImage:[album albumArtWork]];
         [cfItemViews addObject:itemView];
     }

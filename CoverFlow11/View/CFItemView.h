@@ -11,11 +11,17 @@
 
 @interface CFItemView : NSView
 {
+    // Layers
     CALayer *rootLayer;
+    CAReplicatorLayer *replecatorLayer;
     CALayer *imageLayer;
+    CAGradientLayer *shadowLayer;
+    
+    // Transforms
+    CATransform3D reflectionTransform;
 }
 
-- (void)setUpLayers;
+- (void)setUp;
 - (void)setImage:(NSImage *)image;
 
 @end

@@ -19,8 +19,13 @@
 #define COVER_FLOW_SIDE_ZDIS -80.0f
 #define COVER_FLOW_CENTER_ZIDS 0.0f
 
+#define COVER_FLOW_POSITION_Y 60.0f
+
+// Contant Values for Boost Cover Flow
+#define COVER_FLOW_BOUNDS 2 * COVER_FLOW_SIDE_SPACING
+
 // Constant Values for Cover FLOW Item
-#define COVER_FLOW_ITEM_HEIGHT 150.0f
+#define COVER_FLOW_ITEM_HEIGHT 300.0f
 #define COVER_FLOW_ITEM_WIDTH 150.0f
 
 #endif

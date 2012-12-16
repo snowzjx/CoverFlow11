@@ -59,24 +59,25 @@
         [cfLayer removeFromSuperlayer];
     }
     cfLayer = [CALayer layer];
-    [cfLayer setBounds:CGRectMake(0.0f, 0.0f, rootLayer.bounds.size.width, rootLayer.bounds.size.height* 3/4)];
+    [cfLayer setBounds:CGRectMake(0.0f, 0.0f, rootLayer.bounds.size.width, rootLayer.bounds.size.height)];
     [cfLayer addConstraint:[CAConstraint
                             constraintWithAttribute:kCAConstraintMidX
                             relativeTo:@"superlayer"
                             attribute:kCAConstraintMidX]];
     [cfLayer addConstraint:[CAConstraint
-                            constraintWithAttribute:kCAConstraintMaxY
+                            constraintWithAttribute:kCAConstraintMidY
                             relativeTo:@"superlayer"
-                            attribute:kCAConstraintMaxY]];
+                            attribute:kCAConstraintMidY]];
+    [cfLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
     [cfLayer setSublayerTransform:subTransform];
     [rootLayer addSublayer:cfLayer];
     
     for(CFItemView *itemView in cfItemViews)
     {
         CALayer *itemLayer = [itemView layer];
-        [itemLayer setAnchorPoint:CGPointMake(0.5f, 0.0f)];
-        [cfLayer addSublayer:itemLayer];
+        [itemLayer setAnchorPoint:CGPointMake(0.5f, 0.5f)];
     }
+    
     NSLog(@"CFView - Finished Setting Up Layers.");
 }
 
@@ -94,7 +95,7 @@
 {
     NSLog(@"CFView - Laying out Cover Flow index at: %ld",index);
     CATransform3D trans;
-    CGPoint positionn = CGPointMake(cfLayer.bounds.size.width / 2, 0.0f);
+    CGPoint positionn = CGPointMake(cfLayer.bounds.size.width / 2, COVER_FLOW_POSITION_Y);
     CGFloat zPosition = COVER_FLOW_SIDE_ZDIS;
     
     if(index < theSelectedIndex)
@@ -112,7 +113,18 @@
         positionn.x += (index - theSelectedIndex) * COVER_FLOW_SIDE_SPACING;
         trans = rightTransform;
     }
-        
+    if(positionn.x < - COVER_FLOW_BOUNDS || positionn.x > cfLayer.bounds.size.width + COVER_FLOW_BOUNDS)
+    {
+        [[itemView layer] removeFromSuperlayer];
+    }
+    else
+    {
+        if(![[cfLayer sublayers] containsObject:[itemView layer]])
+        {
+            [cfLayer addSublayer:[itemView layer]];
+        }
+    }
+    
     [[itemView layer] setPosition:positionn];
     [[itemView layer] setZPosition:zPosition];
     [[itemView layer] setTransform:trans];
