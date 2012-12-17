@@ -7,7 +7,6 @@
 //
 
 #import "CFView.h"
-#import "CFItemView.h"
 #import "CFViewConstant.h"
 
 @implementation CFView

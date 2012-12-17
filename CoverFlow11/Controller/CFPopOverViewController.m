@@ -8,7 +8,6 @@
 
 #import "CFPopOverViewController.h"
 #import "CFView.h"
-#import "CFItemView.h"
 #import "CFViewConstant.h"
 #import "iTunesAccess.h"
 #import "iTunesAlbum.h"

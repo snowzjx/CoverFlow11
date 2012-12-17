@@ -9,8 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-@class CFItemView;
-
 @interface CFView : NSView
 {
     // Layers
