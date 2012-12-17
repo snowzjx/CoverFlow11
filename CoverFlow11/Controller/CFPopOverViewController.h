@@ -8,11 +8,19 @@
 
 #import <Cocoa/Cocoa.h>
 @class iTunesAccess;
+@class iTunesPlaylist;
+@class iTunesTrack;
 @class CFView;
 
 @interface CFPopOverViewController : NSViewController
 {
     iTunesAccess *theiTunesAccess;
+    iTunesPlaylist *currentPlayList;
+    NSArray *currentAlbums;
+    iTunesTrack *currentTrack;
+    
+    NSInteger selectedIndex;
+    
     IBOutlet CFView *cfView;
 }
 

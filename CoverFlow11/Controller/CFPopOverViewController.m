@@ -37,69 +37,92 @@
         NSLog(@"CFPopOverViewController - Run iTunes ...");
         [theiTunesAccess runiTunes];
     }
-    iTunesPlaylist *playList = [theiTunesAccess getCurrentPlayList];
-    NSLog(@"CFPopOverViewController - Current PlayList: %@",[playList name]);
     
-    NSArray *albums = [theiTunesAccess getAlbumsInPlayList:playList];
-    NSLog(@"CFPopOverViewController - Current Albums Are: ");
-    for (iTunesAlbum *album in albums)
+    iTunesPlaylist *playList = [theiTunesAccess getCurrentPlayList];
+    if (![currentPlayList isEqualTo:playList])
     {
-        NSLog(@"\t%@",[album albumName]);
+        NSLog(@"CFPopOverViewController - Reload Data & Re Draw Layers ...");
+        currentPlayList = playList;
+        [cfView removeAllCoverFlows];
+        [self setUpAlbumInfo];
+        [self addCFItemsToCFView];
     }
-    iTunesTrack * currentTrack = [theiTunesAccess getCurrentTrack];
-    NSLog(@"CFPopOverViewController - Current Track is: %@",currentTrack != nil ? [currentTrack name] : @"NO TRACK");
-    [self setUpCFViewWithAlbums:albums andCurrentTrack:currentTrack];
-    [cfView setUpLayers];
-    [cfView layoutCoverFlowsAnimated:YES];
+    
+    currentTrack = [theiTunesAccess getCurrentTrack];
+    
+    selectedIndex = [self findTrack:currentTrack inAlbums:currentAlbums];
+    
+    if(selectedIndex == 0)
+    {
+        selectedIndex = [currentAlbums count] / 2;
+    }
+    [cfView layoutCoverFlowSelectedAt:selectedIndex animated:YES];
 }
 
-- (void)setUpCFViewWithAlbums:(NSArray *)albums andCurrentTrack:(iTunesTrack *)track
+- (void)setUpAlbumInfo
 {
-    NSLog(@"CFPopOverViewController - Setting date to the CFView ...");
-    NSMutableArray *cfItemViews = [[NSMutableArray alloc] init];
-    NSNumber *index = nil;
-    for (int i = 0; i < [albums count]; i++)
+    NSLog(@"CFPopOverViewController - Setting Up Album Info ...");
+    NSMutableDictionary *albumDict = [[NSMutableDictionary alloc] init];
+    for(iTunesTrack *track in [[currentPlayList tracks] get])
+    {
+        iTunesAlbum *album = [albumDict valueForKey:[track album]];
+        if(album == nil)
+        {
+            album = [[iTunesAlbum alloc] init];
+            [album setAlbumName:[track album]];
+            NSImage *albumImage =[[NSImage alloc] initWithData:[[[track artworks] lastObject] rawData]];
+            [album setAlbumArtWork:albumImage];
+            album.albumTracks = [[NSMutableArray alloc] init];
+            [album.albumTracks addObject:track];
+            [albumDict setValue:album forKey:[track album]];
+        }
+        else
+        {
+            [album.albumTracks addObject:track];
+        }
+    }
+    currentAlbums = [albumDict allValues];
+}
+
+- (void)addCFItemsToCFView
+{
+    NSLog(@"CFPopOverViewController - Adding Cover Flow Item Views to CF View ...");
+    for(iTunesAlbum *album in currentAlbums)
+    {
+        [cfView addImage:[album albumArtWork]];
+    }
+}
+
+- (NSInteger)findTrack:(iTunesTrack *)track inAlbums:(NSArray *)albums
+{
+    for(int i = 0; i < [albums count]; i++)
     {
         iTunesAlbum *album = [albums objectAtIndex:i];
-        if(track != nil && [[album albumName]isEqualToString:[track album]])
+        if([[album albumTracks] containsObject:track])
         {
-            index = [NSNumber numberWithInt:i];
+            return  i;
         }
-        CFItemView * itemView = [[CFItemView alloc] initWithFrame:NSMakeRect(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT)];
-        [itemView setUp];
-        [itemView setImage:[album albumArtWork]];
-        [cfItemViews addObject:itemView];
     }
-    if(index == nil)
-    {
-        index = [NSNumber numberWithInt:0];
-    }
-    NSLog(@"CFPopOverViewController - Seleted Index is: %d",[index intValue]);
-    [cfView setSelectedIndex:index];
-    [cfView setCfItemViews:cfItemViews];
-    NSLog(@"CFPopOverViewController - Data Set Finished.");
+    return 0;
 }
+
 
 // Test interface
 - (IBAction)goBtnClick:(id)sender
 {
-    int _index = [[cfView selectedIndex] intValue];
-    if(_index < [[cfView cfItemViews] count] -1)
+    if(selectedIndex < [currentAlbums count] - 1)
     {
-        _index ++;
-        [cfView setSelectedIndex:[NSNumber numberWithInt:_index]];
-        [cfView layoutCoverFlowsAnimated:YES];
+        selectedIndex += 5;
+        [cfView layoutCoverFlowSelectedAt:selectedIndex animated:YES];
     }
 }
 
 -(IBAction)backBtnClick:(id)sender
 {
-    int _index = [[cfView selectedIndex] intValue];
-    if(_index > 0)
+    if(selectedIndex > 0)
     {
-        _index --;
-        [cfView setSelectedIndex:[NSNumber numberWithInt:_index]];
-        [cfView layoutCoverFlowsAnimated:YES];
+        selectedIndex -= 1;
+        [cfView layoutCoverFlowSelectedAt:selectedIndex animated:YES];
     }
 }
 

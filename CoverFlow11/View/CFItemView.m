@@ -25,6 +25,7 @@
     [rootLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
     [self setLayer:rootLayer];
     [self setWantsLayer:YES];
+    [rootLayer setAnchorPoint:CGPointMake(0.5f, 0.5f)];
     
     replecatorLayer = [CAReplicatorLayer layer];
     [replecatorLayer setBounds:[rootLayer bounds]];
@@ -71,6 +72,7 @@
     imageLayer = [CALayer layer];
     [imageLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2)];
     [imageLayer setContents:image];
+    [imageLayer setContentsGravity:kCAGravityBottom];
     [imageLayer setContentsGravity:kCAGravityResizeAspect];
     [imageLayer addConstraint:[CAConstraint
                                constraintWithAttribute:kCAConstraintMaxY

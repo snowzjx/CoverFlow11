@@ -21,18 +21,15 @@
     CATransform3D leftTransform;
     CATransform3D rightTransform;
     CATransform3D subTransform;
+    CATransform3D reflectionTransform;
+
+    
+    // Item Views
+    NSMutableArray *itemLayers;
 }
+- (void)addImage:(NSImage *)image;
 
-@property(strong) NSArray *cfItemViews;
-@property(strong) NSNumber *selectedIndex;
+- (void)layoutCoverFlowSelectedAt:(NSInteger)index animated:(BOOL)animated;
 
-// When the cfItemViews changed,
-// please call setUpLayers:.
-- (void)setUpLayers;
-
-// When the selectedIndex has been set,
-// call layoutCoverFlowAnimated:
-// the animation will begin.
-- (void)layoutCoverFlowsAnimated:(BOOL)animated;
-
+- (void)removeAllCoverFlows;
 @end

@@ -21,6 +21,5 @@
 - (void)runiTunes;
 - (iTunesTrack *)getCurrentTrack;
 - (iTunesPlaylist *)getCurrentPlayList;
-- (NSArray *)getAlbumsInPlayList:(iTunesPlaylist *) playList;
 
 @end

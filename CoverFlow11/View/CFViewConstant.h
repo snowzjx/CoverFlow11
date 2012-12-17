@@ -13,7 +13,7 @@
 #define ROOT_LAYER_CORNER_RADIUS 5.0f
 
 // Constant Values for Cover Flow
-#define COVER_FLOW_DISZ 200.0f
+#define COVER_FLOW_DISZ 100.0f
 #define COVER_FLOW_SIDE_ANGLE 0.80f
 #define COVER_FLOW_SIDE_SPACING 80.0f
 #define COVER_FLOW_SIDE_ZDIS -80.0f

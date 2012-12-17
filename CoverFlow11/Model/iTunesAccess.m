@@ -75,36 +75,4 @@
     return playList;
 }
 
-- (NSArray *)getAlbumsInPlayList:(iTunesPlaylist *) playList
-{
-    NSLog(@"iTunesAccess - Constructing iTunes Albums ...");
-    NSMutableDictionary *albumDict = [[NSMutableDictionary alloc] init];
-    for(iTunesTrack *track in [[playList tracks] get])
-    {
-        iTunesAlbum *album = [albumDict objectForKey:[track album]];
-        if(album == nil)
-        {
-            album = [[iTunesAlbum alloc] init];
-            [album setAlbumName:[track album]];
-            NSImage *imageData = nil;
-            for(iTunesArtwork *artWork in [track artworks])
-            {
-                if([artWork exists])
-                {
-                    imageData = [artWork data];
-                    break;
-                }
-            }
-            [album setAlbumArtWork:imageData];
-            [album.albumTracks addObject:track];
-            [albumDict setValue:album forKey:[track album]];
-        }
-        else
-        {
-            [album.albumTracks addObject:track];
-        }
-    }
-    return [albumDict allValues];
-}
-
 @end
