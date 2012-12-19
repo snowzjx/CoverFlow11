@@ -42,20 +42,19 @@
     {
         NSLog(@"CFPopOverViewController - Reload Data & Re Draw Layers ...");
         currentPlayList = playList;
-        [cfView removeAllCoverFlows];
         [self setUpAlbumInfo];
         [self addCFItemsToCFView];
     }
     
     currentTrack = [theiTunesAccess getCurrentTrack];
     
-    selectedIndex = [self findTrack:currentTrack inAlbums:currentAlbums];
+    NSInteger selectedIndex = [self findTrack:currentTrack inAlbums:currentAlbums];
     
     if(selectedIndex == 0)
     {
         selectedIndex = [currentAlbums count] / 2;
     }
-    [cfView layoutCoverFlowSelectedAt:selectedIndex animated:YES];
+    [cfView setSelectedIndex:selectedIndex];
 }
 
 - (void)setUpAlbumInfo
@@ -86,10 +85,8 @@
 - (void)addCFItemsToCFView
 {
     NSLog(@"CFPopOverViewController - Adding Cover Flow Item Views to CF View ...");
-    for(iTunesAlbum *album in currentAlbums)
-    {
-        [cfView addImage:[album albumArtWork]];
-    }
+    NSArray * content = [currentAlbums mutableArrayValueForKey:@"albumArtWork"];
+    [cfView setContent:content];
 }
 
 - (NSInteger)findTrack:(iTunesTrack *)track inAlbums:(NSArray *)albums
@@ -109,20 +106,12 @@
 // Test interface
 - (IBAction)goBtnClick:(id)sender
 {
-    if(selectedIndex < [currentAlbums count] - 1)
-    {
-        selectedIndex += 5;
-        [cfView layoutCoverFlowSelectedAt:selectedIndex animated:YES];
-    }
+    [cfView setSelectedIndex:[cfView selectedIndex] + 1];
 }
 
 -(IBAction)backBtnClick:(id)sender
 {
-    if(selectedIndex > 0)
-    {
-        selectedIndex -= 1;
-        [cfView layoutCoverFlowSelectedAt:selectedIndex animated:YES];
-    }
+    [cfView setSelectedIndex:[cfView selectedIndex] - 1];
 }
 
 @end

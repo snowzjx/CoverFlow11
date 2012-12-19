@@ -14,20 +14,16 @@
     // Layers
     CALayer *rootLayer;
     CALayer *cfLayer;
+    CAScrollLayer *scrollLayer;
     
     // CATransform3D
     CATransform3D leftTransform;
     CATransform3D rightTransform;
     CATransform3D subTransform;
     CATransform3D reflectionTransform;
-
-    
-    // Item Views
-    NSMutableArray *itemLayers;
 }
-- (void)addImage:(NSImage *)image;
+@property(nonatomic, copy) NSArray* content;
 
-- (void)layoutCoverFlowSelectedAt:(NSInteger)index animated:(BOOL)animated;
+@property(nonatomic, assign) NSInteger selectedIndex;
 
-- (void)removeAllCoverFlows;
 @end

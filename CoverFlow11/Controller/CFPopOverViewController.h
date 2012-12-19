@@ -18,9 +18,7 @@
     iTunesPlaylist *currentPlayList;
     NSArray *currentAlbums;
     iTunesTrack *currentTrack;
-    
-    NSInteger selectedIndex;
-    
+        
     IBOutlet CFView *cfView;
 }
 
