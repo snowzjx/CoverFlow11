@@ -39,5 +39,7 @@
 
 // Constant Values for Event
 #define SCROLLER_WHEEL_MINIMAL_DELTA_VALUE 0.3f
+#define LEFT_ARROW_KEY_CODE 123
+#define RIGHT_ARROW_KEY_CODE 124
 
 #endif

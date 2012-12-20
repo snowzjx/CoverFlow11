@@ -15,12 +15,16 @@
 - (void)_setUpTransforms;
 - (void)_insertItemLayer:(NSImage *)image;
 - (CGPoint)_positionOfSelectedItem;
+- (NSInteger)_indexOfItemAtPoint:(CGPoint)point;
+- (NSRect)_rectOfItemAtIndex:(NSInteger)index;
+- (void)_selectedLayerClicked;
 
 @end
 
 @implementation CFView
 @synthesize content = _content,selectedIndex = _selectedIndex;
 
+#pragma awakeFromNib
 - (void)awakeFromNib
 {
     NSLog(@"CFView - Awake From Nib ...");
@@ -29,6 +33,7 @@
     [self _setUpLayers];
 }
 
+#pragma Property methods
 - (void)setContent:(NSArray *)content
 {
     NSLog(@"CFView - Setting Content ...");
@@ -59,11 +64,16 @@
     {
         _selectedIndex = selectedIndex;
     }
-    _selectedIndex = selectedIndex;
     [CATransaction setAnimationDuration:COVER_FLOW_ANIMATION_TIME_INTERVAL];
     [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.4f :0.95f :0.75f :0.95f]];
     [scrollLayer layoutIfNeeded];
     [scrollLayer scrollToPoint:[self _positionOfSelectedItem]];
+}
+
+#pragma NSEvent methods
+- (BOOL)acceptsFirstResponder
+{
+    return YES;
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
@@ -79,9 +89,29 @@
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-    
+    switch ([theEvent keyCode]) {
+        case LEFT_ARROW_KEY_CODE:
+            [self setSelectedIndex:[self selectedIndex] + 1];
+            break;
+        case RIGHT_ARROW_KEY_CODE:
+            [self setSelectedIndex:[self selectedIndex] - 1];
+        default:
+            [super keyDown:theEvent];
+            break;
+    }
 }
 
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    NSPoint mousePoint = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSInteger selectedIndex = [self _indexOfItemAtPoint:mousePoint];
+    if(selectedIndex != NSNotFound)
+    {
+        [self setSelectedIndex:selectedIndex];
+    }
+}
+
+#pragma Private methods
 - (void)_setUpLayers
 {
     NSLog(@"CFView - Setting Up Layers ...");
@@ -143,6 +173,7 @@
 - (void)_insertItemLayer:(NSImage *)image
 {
     CALayer *itemRootLayer = [CALayer layer];
+    [itemRootLayer setName:@"ItemRootLayer"];
     [itemRootLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT)];
     [itemRootLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
     [itemRootLayer setAnchorPoint:CGPointMake(0.5f, 0.5f)];
@@ -161,9 +192,24 @@
     [replecatorLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
     [replecatorLayer setInstanceCount:2];
     [replecatorLayer setInstanceTransform:reflectionTransform];
-    
     [itemRootLayer addSublayer:replecatorLayer];
     
+    CALayer *imageLayer = [CALayer layer];
+    [imageLayer setName:@"ImageLayer"];
+    [imageLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2)];
+    [imageLayer setContents:image];
+    [imageLayer setContentsGravity:kCAGravityBottom];
+    [imageLayer setContentsGravity:kCAGravityResizeAspect];
+    [imageLayer addConstraint:[CAConstraint
+                               constraintWithAttribute:kCAConstraintMaxY
+                               relativeTo:@"superlayer"
+                               attribute:kCAConstraintMaxY]];
+    [imageLayer addConstraint:[CAConstraint
+                               constraintWithAttribute:kCAConstraintMidX
+                               relativeTo:@"superlayer"
+                               attribute:kCAConstraintMidX]];
+    [replecatorLayer addSublayer:imageLayer];
+    [scrollLayer addSublayer:itemRootLayer];
     
     CAGradientLayer *shadowLayer = [CAGradientLayer layer];
     [shadowLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2)];
@@ -180,24 +226,7 @@
                             CGColorCreateGenericRGB(0.0f, 0.0f, 0.0f, 1.0f),nil]];
     [shadowLayer setStartPoint:CGPointMake(0.5f, 1.0f)];
     [shadowLayer setEndPoint:CGPointMake(0.5f, 0.3f)];
-    
     [itemRootLayer addSublayer:shadowLayer];
-    
-    CALayer *imageLayer = [CALayer layer];
-    [imageLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2)];
-    [imageLayer setContents:image];
-    [imageLayer setContentsGravity:kCAGravityBottom];
-    [imageLayer setContentsGravity:kCAGravityResizeAspect];
-    [imageLayer addConstraint:[CAConstraint
-                               constraintWithAttribute:kCAConstraintMaxY
-                               relativeTo:@"superlayer"
-                               attribute:kCAConstraintMaxY]];
-    [imageLayer addConstraint:[CAConstraint
-                               constraintWithAttribute:kCAConstraintMidX
-                               relativeTo:@"superlayer"
-                               attribute:kCAConstraintMidX]];
-    [replecatorLayer addSublayer:imageLayer];
-    [scrollLayer addSublayer:itemRootLayer];
 }
 
 - (CGPoint)_positionOfSelectedItem
@@ -205,15 +234,64 @@
     return CGPointMake(_selectedIndex * COVER_FLOW_SPACING , COVER_FLOW_POSITION_Y);
 }
 
+- (NSInteger)_indexOfItemAtPoint:(CGPoint)point
+{
+    if(NSPointInRect(point, [self _rectOfItemAtIndex:_selectedIndex]))
+    {
+        NSLog(@"CFView - Mouse Click On Item At: %ld", _selectedIndex);
+        return _selectedIndex;
+    }
+    NSInteger index = _selectedIndex - 1;
+    while(index >= _selectedIndex - COVER_FLOW_INDEX_DELTA_VALUE && index >= 0)
+    {
+        if(NSPointInRect(point, [self _rectOfItemAtIndex:index]))
+        {
+            NSLog(@"CFView - Mouse Click On Item At: %ld", index);
+            return index;
+        }
+        index --;
+    }
+    index = _selectedIndex + 1;
+    while(index <= _selectedIndex + COVER_FLOW_INDEX_DELTA_VALUE && index <= [_content count] - 1)
+    {
+        if(NSPointInRect(point, [self _rectOfItemAtIndex:index]))
+        {
+            NSLog(@"CFView - Mouse Click On Item At: %ld", index);
+            return index;
+        }
+        index ++;
+    }
+    return NSNotFound;
+}
+
+- (NSRect)_rectOfItemAtIndex:(NSInteger)index
+{
+    if(index < 0 || index > [_content count] - 1)
+    {
+        return NSZeroRect;
+    }
+    CALayer *layer = [[scrollLayer sublayers] objectAtIndex:index];
+    CALayer *subLayer = [[layer sublayers] objectAtIndex:0];
+    CALayer *imageLayer = [[subLayer sublayers] objectAtIndex:0];
+    CGRect frame = [imageLayer convertRect:CGRectMake(0, 0 , COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2) toLayer:rootLayer];
+    return NSRectFromCGRect(frame);
+}
+
+- (void)_selectedLayerClicked
+{
+    NSLog(@"CFView - Center Layer Clicked !");
+}
+
+#pragma Layout manager protocol
 - (void)layoutSublayersOfLayer:(CALayer *)layer
 {
     NSLog(@"CFView - Layout Sub Layers ...");
     for(CALayer *subLayer in [layer sublayers])
     {
         NSInteger index  = [[subLayer valueForKey:@"index"] integerValue];
+        
         CATransform3D trans;
         CGPoint position = CGPointMake(index * COVER_FLOW_SPACING + COVER_FLOW_POSITION_LEFT_OFFSET, COVER_FLOW_POSITION_Y);
-        
         CGFloat zPosition = COVER_FLOW_SIDE_ZDIS;
         
         if(index < _selectedIndex)
