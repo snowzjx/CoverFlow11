@@ -102,16 +102,4 @@
     return 0;
 }
 
-
-// Test interface
-- (IBAction)goBtnClick:(id)sender
-{
-    [cfView setSelectedIndex:[cfView selectedIndex] + 1];
-}
-
--(IBAction)backBtnClick:(id)sender
-{
-    [cfView setSelectedIndex:[cfView selectedIndex] - 1];
-}
-
 @end

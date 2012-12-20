@@ -21,15 +21,54 @@
 @implementation CFView
 @synthesize content = _content,selectedIndex = _selectedIndex;
 
+- (void)awakeFromNib
+{
+    NSLog(@"CFView - Awake From Nib ...");
+    [self setWantsLayer:YES];
+    [self _setUpTransforms];
+    [self _setUpLayers];
+}
+
+- (void)setContent:(NSArray *)content
+{
+    NSLog(@"CFView - Setting Content ...");
+    if([_content isEqualToArray:content])
+    {
+        return;
+    }
+    _content = content;
+    [[scrollLayer sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    for(NSImage *image in _content)
+    {
+        [self _insertItemLayer:image];
+    }
+}
+
+- (void)setSelectedIndex:(NSInteger)selectedIndex
+{
+    NSLog(@"CFView - Selected Index Been Set With Value: %ld !",selectedIndex);
+    if(selectedIndex < 0)
+    {
+        return;
+    }
+    else if(selectedIndex > [_content count] - 1)
+    {
+        return;
+    }
+    else
+    {
+        _selectedIndex = selectedIndex;
+    }
+    _selectedIndex = selectedIndex;
+    [CATransaction setAnimationDuration:COVER_FLOW_ANIMATION_TIME_INTERVAL];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.4f :0.95f :0.75f :0.95f]];
+    [scrollLayer layoutIfNeeded];
+    [scrollLayer scrollToPoint:[self _positionOfSelectedItem]];
+}
+
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    if (fabs([theEvent deltaY]) > SCROLLER_WHEEL_MINIMAL_DELTA_VALUE) {
-		if ([theEvent deltaY] > 0) {
-			[self setSelectedIndex:(self.selectedIndex - 1)];
-		} else {
-			[self setSelectedIndex:(self.selectedIndex + 1)];
-		}
-	} else if (fabs([theEvent deltaX]) > SCROLLER_WHEEL_MINIMAL_DELTA_VALUE) {
+    if (fabs([theEvent deltaX]) > SCROLLER_WHEEL_MINIMAL_DELTA_VALUE) {
 		if ([theEvent deltaX] > 0) {
 			[self setSelectedIndex:(self.selectedIndex - 1)];
 		} else {
@@ -38,12 +77,9 @@
 	}
 }
 
-- (void)awakeFromNib
+- (void)keyDown:(NSEvent *)theEvent
 {
-    NSLog(@"CFView - Awake From Nib ...");
-    [self setWantsLayer:YES];
-    [self _setUpTransforms];
-    [self _setUpLayers];
+    
 }
 
 - (void)_setUpLayers
@@ -89,11 +125,13 @@
 {
     NSLog(@"CFView - Setting Up Transformas ...");
     
+    CATransform3D scaleTransform = CATransform3DScale(CATransform3DIdentity, COVER_FLOW_SIDE_SCALE, 1.0f, 1.0f);
+    
     // Transform - Rotation for the cover left to the center.
-    leftTransform = CATransform3DRotate(CATransform3DIdentity, COVER_FLOW_SIDE_ANGLE, 0.0f, 1.0f, 0.0f);
+    leftTransform = CATransform3DRotate(scaleTransform, COVER_FLOW_SIDE_ANGLE, 0.0f, 1.0f, 0.0f);
     
     // Transform - Rotation for the cover right to the center.
-    rightTransform = CATransform3DRotate(CATransform3DIdentity, COVER_FLOW_SIDE_ANGLE, 0.0f, -1.0f, 0.0f);
+    rightTransform = CATransform3DRotate(scaleTransform, COVER_FLOW_SIDE_ANGLE, 0.0f, -1.0f, 0.0f);
     
     // Transform for all sub layers - Add Perspective.
     subTransform = CATransform3DIdentity;
@@ -162,39 +200,9 @@
     [scrollLayer addSublayer:itemRootLayer];
 }
 
-- (void)setContent:(NSArray *)content
-{
-    NSLog(@"CFView - Setting Content ...");
-    if([_content isEqualToArray:content])
-    {
-        return;
-    }
-    _content = content;
-    [[scrollLayer sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-    for(NSImage *image in _content)
-    {
-        [self _insertItemLayer:image];
-    }
-}
-
-
-- (void)setSelectedIndex:(NSInteger)selectedIndex
-{
-    NSLog(@"CFView - Selected Index been set!");
-    if(selectedIndex < 0 || selectedIndex > [_content count] - 1)
-    {
-        return;
-    }
-    _selectedIndex = selectedIndex;
-    [CATransaction setAnimationDuration:COVER_FLOW_ANIMATION_TIME_INTERVAL];
-    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
-    [scrollLayer layoutIfNeeded];
-    [scrollLayer scrollToPoint:[self _positionOfSelectedItem]];
-}
-
 - (CGPoint)_positionOfSelectedItem
 {
-    return CGPointMake(_selectedIndex * COVER_FLOW_SIDE_SPACING - COVER_FLOW_ITEM_WIDTH, COVER_FLOW_POSITION_Y);
+    return CGPointMake(_selectedIndex * COVER_FLOW_SPACING , COVER_FLOW_POSITION_Y);
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer
@@ -204,13 +212,15 @@
     {
         NSInteger index  = [[subLayer valueForKey:@"index"] integerValue];
         CATransform3D trans;
-        CGPoint position = CGPointMake(index * COVER_FLOW_SIDE_SPACING + COVER_FLOW_ITEM_WIDTH / 2 + COVER_FLOW_POSITION_LEFT_OFFSET, COVER_FLOW_POSITION_Y);
+        CGPoint position = CGPointMake(index * COVER_FLOW_SPACING + COVER_FLOW_POSITION_LEFT_OFFSET, COVER_FLOW_POSITION_Y);
         
         CGFloat zPosition = COVER_FLOW_SIDE_ZDIS;
         
         if(index < _selectedIndex)
         {
+            position.x -= COVER_FLOW_SIDE_SPACING_OFFST;
             trans = leftTransform;
+            zPosition -= ABS(_selectedIndex - index) * COVER_FLOW_SIDE_ZDIS_FADE;
         }
         else if(index == _selectedIndex)
         {
@@ -219,7 +229,9 @@
         }
         else if(index > _selectedIndex)
         {
+            position.x += COVER_FLOW_SIDE_SPACING_OFFST;
             trans = rightTransform;
+            zPosition -= ABS(_selectedIndex - index) * COVER_FLOW_SIDE_ZDIS_FADE;
         }
         
         /* -- Remove unused layers from cflayer -- */
@@ -231,6 +243,7 @@
         {
             [subLayer setHidden:NO];
         }
+        
         [subLayer setPosition:position];
         [subLayer setTransform:trans];
         [subLayer setZPosition:zPosition];

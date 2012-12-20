@@ -13,26 +13,31 @@
 #define ROOT_LAYER_CORNER_RADIUS 5.0f
 
 // Constant Values for Cover Flow
-#define COVER_FLOW_DISZ 100.0f
-#define COVER_FLOW_SIDE_ANGLE 0.80f
-#define COVER_FLOW_SIDE_SPACING 80.0f
+#define COVER_FLOW_SPACING 50.0f
+
+#define COVER_FLOW_SIDE_ANGLE (M_PI/180*60)
+#define COVER_FLOW_SIDE_SPACING_OFFST 60.0f
 #define COVER_FLOW_SIDE_ZDIS -80.0f
+#define COVER_FLOW_SIDE_ZDIS_FADE 5.0f
+#define COVER_FLOW_SIDE_SCALE 0.8f
+
 #define COVER_FLOW_CENTER_ZIDS 0.0f
+#define COVER_FLOW_DISZ 100.0f
 
 #define COVER_FLOW_POSITION_Y 60.0f
-#define COVER_FLOW_POSITION_LEFT_OFFSET 30.0f
-
-// Contant Values for Boost Cover Flow
-#define COVER_FLOW_INDEX_DELTA_VALUE 8
+#define COVER_FLOW_POSITION_LEFT_OFFSET 250.0f
 
 // Constant Values for Cover FLOW Item
 #define COVER_FLOW_ITEM_HEIGHT 300.0f
 #define COVER_FLOW_ITEM_WIDTH 150.0f
 
+// Contant Values for Boost Cover Flow
+#define COVER_FLOW_INDEX_DELTA_VALUE 8
+
 // Constant Values for Animation
-#define COVER_FLOW_ANIMATION_TIME_INTERVAL 0.3f
+#define COVER_FLOW_ANIMATION_TIME_INTERVAL 0.5f
 
 // Constant Values for Event
-#define SCROLLER_WHEEL_MINIMAL_DELTA_VALUE 1.5f
+#define SCROLLER_WHEEL_MINIMAL_DELTA_VALUE 0.3f
 
 #endif
