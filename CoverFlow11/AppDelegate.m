@@ -29,9 +29,8 @@
         statusItem = nil;
     }
     statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:30.0f];
-    [statusItem setTitle:@"CF"];
-    // [_statusItem setImage:nil];
-    // [_statusItem setAlternateImage:nil];
+    [statusItem setImage:[NSImage imageNamed:@"StatusItemIcon"]];
+    [statusItem setAlternateImage:[NSImage imageNamed:@"StatusItemIconHighlight"]];
     [statusItem setHighlightMode:YES];
     [statusItem setToolTip:@"CoverFlow11"];
     [statusItem setAction:@selector(showCFPopOver:)];

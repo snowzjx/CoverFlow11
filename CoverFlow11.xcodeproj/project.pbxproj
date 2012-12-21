@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		800572B6167C26D300054DF7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 800572B5167C26D300054DF7 /* QuartzCore.framework */; };
+		8042AB401684A891000B0A24 /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8042AB3F1684A891000B0A24 /* StatusItemIcon.png */; };
+		8042AB421684AAE5000B0A24 /* StatusItemIconHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8042AB411684AAE5000B0A24 /* StatusItemIconHighlight.png */; };
 		805D9D7C16777610006E97FE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805D9D7B16777610006E97FE /* Cocoa.framework */; };
 		805D9D8616777611006E97FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D8416777611006E97FE /* InfoPlist.strings */; };
 		805D9D8816777611006E97FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 805D9D8716777611006E97FE /* main.m */; };
@@ -24,6 +26,8 @@
 
 /* Begin PBXFileReference section */
 		800572B5167C26D300054DF7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8042AB3F1684A891000B0A24 /* StatusItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StatusItemIcon.png; path = Resources/StatusItemIcon.png; sourceTree = "<group>"; };
+		8042AB411684AAE5000B0A24 /* StatusItemIconHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StatusItemIconHighlight.png; path = Resources/StatusItemIconHighlight.png; sourceTree = "<group>"; };
 		805D9D7716777610006E97FE /* CoverFlow11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoverFlow11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		805D9D7B16777610006E97FE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		805D9D7E16777610006E97FE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -65,6 +69,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8042AB3B1684A677000B0A24 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8042AB3F1684A891000B0A24 /* StatusItemIcon.png */,
+				8042AB411684AAE5000B0A24 /* StatusItemIconHighlight.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		805D9D6C16777610006E97FE = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +125,7 @@
 				80A59D0916777DDA009E993C /* Controller */,
 				80E4D14A167B7D49008721AA /* View */,
 				80A59D0316777B8C009E993C /* User Interface */,
+				8042AB3B1684A677000B0A24 /* Resources */,
 				805D9D8216777611006E97FE /* Supporting Files */,
 			);
 			path = CoverFlow11;
@@ -225,6 +239,8 @@
 				805D9D8C16777611006E97FE /* Credits.rtf in Resources */,
 				805D9D9216777611006E97FE /* MainMenu.xib in Resources */,
 				80A59D0F16777EC1009E993C /* CFPopOverView.xib in Resources */,
+				8042AB401684A891000B0A24 /* StatusItemIcon.png in Resources */,
+				8042AB421684AAE5000B0A24 /* StatusItemIconHighlight.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
