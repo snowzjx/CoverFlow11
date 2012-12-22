@@ -17,12 +17,17 @@
 - (CGPoint)_positionOfSelectedItem;
 - (NSInteger)_indexOfItemAtPoint:(CGPoint)point;
 - (NSRect)_rectOfItemAtIndex:(NSInteger)index;
+
 - (void)_selectedLayerClicked;
+- (void)_selectedLayerDoubleClicked;
 
 @end
 
 @implementation CFView
 @synthesize content = _content,selectedIndex = _selectedIndex;
+
+NSString * const selectedCoverDoubleClickedNotification = @"CF_Selected_Cover_Double_Clicked";
+NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked";
 
 #pragma awakeFromNib
 - (void)awakeFromNib
@@ -42,7 +47,7 @@
         return;
     }
     _content = content;
-    [[scrollLayer sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    [[_scrollLayer sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
     for(NSImage *image in _content)
     {
         [self _insertItemLayer:image];
@@ -66,8 +71,8 @@
     }
     [CATransaction setAnimationDuration:COVER_FLOW_ANIMATION_TIME_INTERVAL];
     [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithControlPoints:0.4f :0.95f :0.75f :0.95f]];
-    [scrollLayer layoutIfNeeded];
-    [scrollLayer scrollToPoint:[self _positionOfSelectedItem]];
+    [_scrollLayer layoutIfNeeded];
+    [_scrollLayer scrollToPoint:[self _positionOfSelectedItem]];
 }
 
 #pragma NSEvent methods
@@ -107,7 +112,18 @@
     NSInteger selectedIndex = [self _indexOfItemAtPoint:mousePoint];
     if(selectedIndex != NSNotFound)
     {
-        [self setSelectedIndex:selectedIndex];
+        if ([theEvent clickCount] == 2 && selectedIndex == _selectedIndex)
+        {
+            [self _selectedLayerDoubleClicked];
+        }
+        else if(selectedIndex == _selectedIndex)
+        {
+            [self _selectedLayerClicked];
+        }
+        else
+        {
+            [self setSelectedIndex:selectedIndex];
+        }
     }
 }
 
@@ -115,40 +131,40 @@
 - (void)_setUpLayers
 {
     NSLog(@"CFView - Setting Up Layers ...");
-    rootLayer = [CALayer layer];
-    [rootLayer setName:@"RootLayer"];
-    [rootLayer setBackgroundColor:CGColorGetConstantColor(kCGColorBlack)];
-    [rootLayer setCornerRadius:ROOT_LAYER_CORNER_RADIUS];
-    [rootLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
-    [self setLayer:rootLayer];
+    _rootLayer = [CALayer layer];
+    [_rootLayer setName:@"RootLayer"];
+    [_rootLayer setBackgroundColor:CGColorGetConstantColor(kCGColorBlack)];
+    [_rootLayer setCornerRadius:ROOT_LAYER_CORNER_RADIUS];
+    [_rootLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
+    [self setLayer:_rootLayer];
 
-    cfLayer = [CALayer layer];
-    [cfLayer setName:@"CoverFlowLayer"];
-    [cfLayer addConstraint:[CAConstraint
+    _coverFlowLayer = [CALayer layer];
+    [_coverFlowLayer setName:@"CoverFlowLayer"];
+    [_coverFlowLayer addConstraint:[CAConstraint
                             constraintWithAttribute:kCAConstraintWidth
                             relativeTo:@"superlayer"
                             attribute:kCAConstraintWidth]];
-    [cfLayer addConstraint:[CAConstraint
+    [_coverFlowLayer addConstraint:[CAConstraint
                             constraintWithAttribute:kCAConstraintHeight
                             relativeTo:@"superlayer"
                             attribute:kCAConstraintHeight]];
-    [cfLayer addConstraint:[CAConstraint
+    [_coverFlowLayer addConstraint:[CAConstraint
                             constraintWithAttribute:kCAConstraintMidX
                             relativeTo:@"superlayer"
                             attribute:kCAConstraintMidX]];
-    [cfLayer addConstraint:[CAConstraint
+    [_coverFlowLayer addConstraint:[CAConstraint
                             constraintWithAttribute:kCAConstraintMidY
                             relativeTo:@"superlayer"
                             attribute:kCAConstraintMidY]];
-    [rootLayer addSublayer:cfLayer];
+    [_rootLayer addSublayer:_coverFlowLayer];
     
-    scrollLayer = [CAScrollLayer layer];
-    [scrollLayer setName:@"ScrollLayer"];
-    [scrollLayer setScrollMode:kCAScrollHorizontally];
-    [scrollLayer setAutoresizingMask:kCALayerWidthSizable | kCALayerHeightSizable];
-    [scrollLayer setLayoutManager:self];
-    [scrollLayer setSublayerTransform:subTransform];
-    [cfLayer addSublayer:scrollLayer];
+    _scrollLayer = [CAScrollLayer layer];
+    [_scrollLayer setName:@"ScrollLayer"];
+    [_scrollLayer setScrollMode:kCAScrollHorizontally];
+    [_scrollLayer setAutoresizingMask:kCALayerWidthSizable | kCALayerHeightSizable];
+    [_scrollLayer setLayoutManager:self];
+    [_scrollLayer setSublayerTransform:_subLayerTransform];
+    [_coverFlowLayer addSublayer:_scrollLayer];
 }
 
 - (void)_setUpTransforms
@@ -158,16 +174,16 @@
     CATransform3D scaleTransform = CATransform3DScale(CATransform3DIdentity, COVER_FLOW_SIDE_SCALE, 1.0f, 1.0f);
     
     // Transform - Rotation for the cover left to the center.
-    leftTransform = CATransform3DRotate(scaleTransform, COVER_FLOW_SIDE_ANGLE, 0.0f, 1.0f, 0.0f);
+    _leftTransform = CATransform3DRotate(scaleTransform, COVER_FLOW_SIDE_ANGLE, 0.0f, 1.0f, 0.0f);
     
     // Transform - Rotation for the cover right to the center.
-    rightTransform = CATransform3DRotate(scaleTransform, COVER_FLOW_SIDE_ANGLE, 0.0f, -1.0f, 0.0f);
+    _rightTransform = CATransform3DRotate(scaleTransform, COVER_FLOW_SIDE_ANGLE, 0.0f, -1.0f, 0.0f);
     
     // Transform for all sub layers - Add Perspective.
-    subTransform = CATransform3DIdentity;
-    subTransform.m34 = -1/COVER_FLOW_DISZ;
+    _subLayerTransform = CATransform3DIdentity;
+    _subLayerTransform.m34 = -1/COVER_FLOW_DISZ;
     
-    reflectionTransform = CATransform3DScale(CATransform3DIdentity, 1.0f, -1.0f, 1.0f);
+    _reflectionTransform = CATransform3DScale(CATransform3DIdentity, 1.0f, -1.0f, 1.0f);
 }
 
 - (void)_insertItemLayer:(NSImage *)image
@@ -177,7 +193,7 @@
     [itemRootLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT)];
     [itemRootLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
     [itemRootLayer setAnchorPoint:CGPointMake(0.5f, 0.5f)];
-    [itemRootLayer setValue:[NSNumber numberWithInteger:[[scrollLayer sublayers] count]] forKey:@"index"];
+    [itemRootLayer setValue:[NSNumber numberWithInteger:[[_scrollLayer sublayers] count]] forKey:@"index"];
     
     CAReplicatorLayer *replecatorLayer = [CAReplicatorLayer layer];
     [replecatorLayer setBounds:[itemRootLayer bounds]];
@@ -191,7 +207,7 @@
                                     attribute:kCAConstraintMidY]];
     [replecatorLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
     [replecatorLayer setInstanceCount:2];
-    [replecatorLayer setInstanceTransform:reflectionTransform];
+    [replecatorLayer setInstanceTransform:_reflectionTransform];
     [itemRootLayer addSublayer:replecatorLayer];
     
     CALayer *imageLayer = [CALayer layer];
@@ -209,7 +225,7 @@
                                relativeTo:@"superlayer"
                                attribute:kCAConstraintMidX]];
     [replecatorLayer addSublayer:imageLayer];
-    [scrollLayer addSublayer:itemRootLayer];
+    [_scrollLayer addSublayer:itemRootLayer];
     
     CAGradientLayer *shadowLayer = [CAGradientLayer layer];
     [shadowLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2)];
@@ -270,16 +286,25 @@
     {
         return NSZeroRect;
     }
-    CALayer *layer = [[scrollLayer sublayers] objectAtIndex:index];
+    CALayer *layer = [[_scrollLayer sublayers] objectAtIndex:index];
     CALayer *subLayer = [[layer sublayers] objectAtIndex:0];
     CALayer *imageLayer = [[subLayer sublayers] objectAtIndex:0];
-    CGRect frame = [imageLayer convertRect:CGRectMake(0, 0 , COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2) toLayer:rootLayer];
+    CGRect frame = [imageLayer convertRect:CGRectMake(0, 0 , COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2) toLayer:_rootLayer];
     return NSRectFromCGRect(frame);
+}
+
+- (void)_selectedLayerDoubleClicked
+{
+    NSLog(@"CFView - Selected Layer Double Clicked!");
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:_selectedIndex] forKey:@"SelectedIndex"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:selectedCoverDoubleClickedNotification object:self userInfo:userInfo];
 }
 
 - (void)_selectedLayerClicked
 {
-    NSLog(@"CFView - Center Layer Clicked !");
+    NSLog(@"CFView - Selected Layer Single Clicked!");
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:_selectedIndex] forKey:@"SelectedIndex"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:selectedCoverClickedNotification object:self userInfo:userInfo];
 }
 
 #pragma Layout manager protocol
@@ -297,7 +322,7 @@
         if(index < _selectedIndex)
         {
             position.x -= COVER_FLOW_SIDE_SPACING_OFFST;
-            trans = leftTransform;
+            trans = _leftTransform;
             zPosition -= ABS(_selectedIndex - index) * COVER_FLOW_SIDE_ZDIS_FADE;
         }
         else if(index == _selectedIndex)
@@ -308,7 +333,7 @@
         else if(index > _selectedIndex)
         {
             position.x += COVER_FLOW_SIDE_SPACING_OFFST;
-            trans = rightTransform;
+            trans = _rightTransform;
             zPosition -= ABS(_selectedIndex - index) * COVER_FLOW_SIDE_ZDIS_FADE;
         }
         

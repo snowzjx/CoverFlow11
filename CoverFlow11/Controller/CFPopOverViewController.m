@@ -14,6 +14,16 @@
 
 @interface CFPopOverViewController ()
 
+- (void)_loadiTunesInfo;
+- (void)_loadAlbumInfo;
+- (void)_setUpCFView;
+- (void)_updateCFView;
+
+- (void)_registerForNotifications;
+- (void)_unregisterForNotifications;
+- (void)_handleSelectedCoverDoubleClick:(NSNotification *)notification;
+- (void)_handleSelectedCoverClick:(NSNotification *)notification;
+
 @end
 
 @implementation CFPopOverViewController
@@ -23,83 +33,111 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         NSLog(@"CFPopOverViewController - Initializing CFPopOverViewController ...");
-        theiTunesAccess = [iTunesAccess sharediTunesAccess];
+        _iTunesAccess = [iTunesAccess sharediTunesAccess];
     }
     return self;
 }
 
-- (void)didPopOver
+- (void)_loadiTunesInfo
 {
-    NSLog(@"CFPopOverViewController - Will Pop Over ...");
-    if(![theiTunesAccess isiTunesRunning])
-    {
-        NSLog(@"CFPopOverViewController - Run iTunes ...");
-        [theiTunesAccess runiTunes];
-    }
-    
-    iTunesPlaylist *playList = [theiTunesAccess getCurrentPlayList];
-    if (![currentPlayList isEqualTo:playList])
-    {
-        NSLog(@"CFPopOverViewController - Reload Data & Re Draw Layers ...");
-        currentPlayList = playList;
-        [self setUpAlbumInfo];
-        [self addCFItemsToCFView];
-    }
-    
-    currentTrack = [theiTunesAccess getCurrentTrack];
-    
-    NSInteger selectedIndex = [self findTrack:currentTrack inAlbums:currentAlbums];
-    
-    if(selectedIndex == 0)
-    {
-        selectedIndex = [currentAlbums count] / 2;
-    }
-    [cfView setSelectedIndex:selectedIndex];
+    NSLog(@"CFPopOverViewController - Loading iTunes Info ...");
+    _soundVolumn = [_iTunesAccess getSoundVolumn];
+    _iTunesStatus = [_iTunesAccess getiTunesState];
 }
 
-- (void)setUpAlbumInfo
+- (void)_loadAlbumInfo
 {
-    NSLog(@"CFPopOverViewController - Setting Up Album Info ...");
-    NSMutableDictionary *albumDict = [[NSMutableDictionary alloc] init];
-    for(iTunesTrack *track in [[currentPlayList tracks] get])
+    if(_albums == nil)
     {
-        iTunesAlbum *album = [albumDict valueForKey:[track album]];
-        if(album == nil)
+        NSLog(@"CFPopOverViewController - Loading Album Info ...");
+        _albums = [_iTunesAccess getCurrentAlbums];
+    }
+}
+
+- (void)_setUpCFView
+{
+    NSLog(@"CFPopOverViewController - Setting Up Cover Flow View ...");
+    NSArray *content = [_albums valueForKey:@"artWork"];
+    [_cfView setContent:content];
+}
+
+- (void)_updateCFView
+{
+    NSLog(@"CFPopOverViewController - Updating Cover Flow View ...");
+    NSString *currentTrackName = [[_iTunesAccess getCurrentTrack] name];
+    NSInteger selectedIndex = 0;
+    for(int i = 0; i < [_albums count]; i++)
+    {
+        iTunesAlbum *album = [_albums objectAtIndex:i];
+        if([[album trackNames] containsObject:currentTrackName])
         {
-            album = [[iTunesAlbum alloc] init];
-            [album setAlbumName:[track album]];
-            NSImage *albumImage =[[NSImage alloc] initWithData:[[[track artworks] lastObject] rawData]];
-            [album setAlbumArtWork:albumImage];
-            album.albumTracks = [[NSMutableArray alloc] init];
-            [album.albumTracks addObject:track];
-            [albumDict setValue:album forKey:[track album]];
-        }
-        else
-        {
-            [album.albumTracks addObject:track];
+            selectedIndex = i;
+            break;
         }
     }
-    currentAlbums = [albumDict allValues];
+    [_cfView setSelectedIndex:selectedIndex];
 }
 
-- (void)addCFItemsToCFView
+- (void)_registerForNotifications
 {
-    NSLog(@"CFPopOverViewController - Adding Cover Flow Item Views to CF View ...");
-    NSArray * content = [currentAlbums mutableArrayValueForKey:@"albumArtWork"];
-    [cfView setContent:content];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_handleSelectedCoverDoubleClick:)
+                                                 name:selectedCoverDoubleClickedNotification
+                                               object:_cfView];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_handleSelectedCoverClick:)
+                                                 name:selectedCoverClickedNotification
+                                               object:_cfView];
 }
 
-- (NSInteger)findTrack:(iTunesTrack *)track inAlbums:(NSArray *)albums
+- (void)_unregisterForNotifications
 {
-    for(int i = 0; i < [albums count]; i++)
-    {
-        iTunesAlbum *album = [albums objectAtIndex:i];
-        if([[album albumTracks] containsObject:track])
-        {
-            return  i;
-        }
-    }
-    return 0;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:selectedCoverDoubleClickedNotification object:_cfView];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:selectedCoverClickedNotification object:_cfView];
 }
 
+- (void)_handleSelectedCoverDoubleClick:(NSNotification *)notification
+{
+    NSInteger  selectedIndex = [[[notification userInfo] valueForKey:@"SelectedIndex"] intValue];
+    [_iTunesAccess playAlbum:[_albums objectAtIndex:selectedIndex] from:0];
+}
+
+- (void)_handleSelectedCoverClick:(NSNotification *)notification
+{
+    NSInteger  selectedIndex = [[[notification userInfo] valueForKey:@"SelectedIndex"] intValue];
+    NSLog(@"Unimplemented Function! Selected Index at: %ld",selectedIndex);
+}
+
+- (void)popoverWillShow:(NSNotification *)notification
+{
+    NSLog(@"CFPopOverViewController - Did Pop Over ...");
+    [self _loadiTunesInfo];
+    [self _loadAlbumInfo];
+    [self _setUpCFView];
+    [self _updateCFView];
+    [self _registerForNotifications];
+}
+
+- (void)popoverDidClose:(NSNotification *)notification
+{
+    NSLog(@"CFPopOverViewController - Pop Over Did Close");
+    [self _unregisterForNotifications];
+}
+
+- (void)playBtnClick:(id)sender
+{
+    [_iTunesAccess playPause];
+}
+
+- (void)nextBtnClick:(id)sender
+{
+    [_iTunesAccess playNextTrack];
+    [self _updateCFView];
+}
+
+- (void)prevBtnClick:(id)sender
+{
+    [_iTunesAccess playPreviousTrack];
+    [self _updateCFView];
+}
 @end

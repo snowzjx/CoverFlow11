@@ -50,6 +50,7 @@
     }
     [cfPopOver setContentViewController:cfPopOverViewController];
     [cfPopOver setBehavior:NSPopoverBehaviorTransient];
+    [cfPopOver setDelegate:cfPopOverViewController];
     NSLog(@"AppDelegate - Finished Initializing CoverFlow11 PopOver.");
 }
 
@@ -57,7 +58,6 @@
 {
     NSLog(@"AppDelegate - Going to Show CoverFlow11 PopOver ...");
     [cfPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
-    [cfPopOverViewController didPopOver];
 }
 
 @end

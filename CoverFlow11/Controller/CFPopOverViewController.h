@@ -7,21 +7,25 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@class iTunesAccess;
-@class iTunesPlaylist;
-@class iTunesTrack;
+#import "iTunesAccess.h"
 @class CFView;
 
-@interface CFPopOverViewController : NSViewController
+@interface CFPopOverViewController : NSViewController<NSPopoverDelegate>
 {
-    iTunesAccess *theiTunesAccess;
-    iTunesPlaylist *currentPlayList;
-    NSArray *currentAlbums;
-    iTunesTrack *currentTrack;
-        
-    IBOutlet CFView *cfView;
+    // iTunesAccess
+    iTunesAccess *_iTunesAccess;
+    
+    // Info related to iTunes
+    NSArray *_albums;
+    iTunesStatusEnum _iTunesStatus;
+    NSInteger _soundVolumn;
+    
+    // Cover Flow View
+    IBOutlet CFView *_cfView;
 }
 
-- (void)didPopOver;
+- (IBAction)playBtnClick:(id)sender;
+- (IBAction)nextBtnClick:(id)sender;
+- (IBAction)prevBtnClick:(id)sender;
 
 @end
