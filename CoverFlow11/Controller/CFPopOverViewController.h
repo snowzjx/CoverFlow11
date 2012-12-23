@@ -18,6 +18,9 @@
     // Info related to iTunes
     NSArray *_albums;
     iTunesStatusEnum _iTunesStatus;
+    
+    NSString *_currentAlbumName;
+    
     NSInteger _soundVolumn;
     
     // Cover Flow View

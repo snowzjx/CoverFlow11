@@ -16,6 +16,7 @@
 
 - (void)_loadiTunesInfo;
 - (void)_loadAlbumInfo;
+- (void)_loadCurrentInfo;
 - (void)_setUpCFView;
 - (void)_updateCFView;
 - (void)_updateControls;
@@ -56,6 +57,11 @@
     }
 }
 
+- (void)_loadCurrentInfo
+{
+    _currentAlbumName = [[_iTunesAccess getCurrentTrack] album];
+}
+
 - (void)_setUpCFView
 {
     NSLog(@"CFPopOverViewController - Setting Up Cover Flow View ...");
@@ -65,13 +71,11 @@
 
 - (void)_updateCFView
 {
-    NSLog(@"CFPopOverViewController - Updating Cover Flow View ...");
-    NSString *currentTrackName = [[_iTunesAccess getCurrentTrack] name];
     NSInteger selectedIndex = 0;
     for(int i = 0; i < [_albums count]; i++)
     {
         iTunesAlbum *album = [_albums objectAtIndex:i];
-        if([[album trackNames] containsObject:currentTrackName])
+        if([[album album] isEqualToString:_currentAlbumName])
         {
             selectedIndex = i;
             break;
@@ -135,29 +139,39 @@
 - (void)_handleiTunesNotifications:(NSNotification *)notification
 {
     NSDictionary *userInfo = [notification userInfo];
+    
     NSString *playerState = [userInfo valueForKey:@"Player State"];
+    iTunesStatusEnum stateEnum = Unknow;
     if([playerState isEqualToString:@"Playing"])
     {
-        [_btnPlay setImage:[NSImage imageNamed:@"btnpause"]];
-        [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnpausehighlight"]];
+        stateEnum = Playing;
     }
     if([playerState isEqualToString:@"Paused"])
     {
-        [_btnPlay setImage:[NSImage imageNamed:@"btnplay"]];
-        [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnplayhighlight"]];
+        stateEnum = Paused;
     }
-    NSString *albumName = [userInfo valueForKey:@"Album"];
-    NSInteger selectedIndex = 0;
-    for(int i = 0; i < [_albums count]; i++)
+    if(_iTunesStatus != stateEnum)
     {
-        iTunesAlbum *album = [_albums objectAtIndex:i];
-        if([[album album] isEqualToString:albumName])
+        if(stateEnum == Playing)
         {
-            selectedIndex = i;
-            break;
+            _iTunesStatus = Playing;
+            [_btnPlay setImage:[NSImage imageNamed:@"btnpause"]];
+            [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnpausehighlight"]];
+        }
+        if(stateEnum == Paused)
+        {
+            _iTunesStatus = Paused;
+            [_btnPlay setImage:[NSImage imageNamed:@"btnplay"]];
+            [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnplayhighlight"]];
         }
     }
-    [_cfView setSelectedIndex:selectedIndex];
+    
+    NSString *currentAlbumName = [userInfo valueForKey:@"Album"];
+    if(currentAlbumName != nil)
+    {
+        _currentAlbumName = currentAlbumName;
+        [self _updateCFView];
+    }
 }
 
 - (void)popoverWillShow:(NSNotification *)notification
@@ -165,6 +179,7 @@
     NSLog(@"CFPopOverViewController - Did Pop Over ...");
     [self _loadiTunesInfo];
     [self _loadAlbumInfo];
+    [self _loadCurrentInfo];
     [self _setUpCFView];
     [self _updateCFView];
     [self _updateControls];
