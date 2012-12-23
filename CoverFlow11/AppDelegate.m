@@ -10,17 +10,25 @@
 #import "AppDelegate.h"
 #import "CFPopOverViewController.h"
 
+@interface AppDelegate ()
+
+- (void)_menuInit;
+- (void)_cfPopOverInit;
+- (void)_showCFPopOver:(id)sender;
+
+@end
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
     NSLog(@"AppDelegate - Application Initializing ...");
-    [self menuInit];
-    [self cfPopOverInit];
+    [self _menuInit];
+    [self _cfPopOverInit];
 }
 
-- (void)menuInit
+- (void)_menuInit
 {
     NSLog(@"AppDelegate - Initializing Menu ...");
     if(statusItem)
@@ -33,11 +41,11 @@
     [statusItem setAlternateImage:[NSImage imageNamed:@"StatusItemIconHighlight"]];
     [statusItem setHighlightMode:YES];
     [statusItem setToolTip:@"CoverFlow11"];
-    [statusItem setAction:@selector(showCFPopOver:)];
+    [statusItem setAction:@selector(_showCFPopOver:)];
     NSLog(@"AppDelegate - Finished Initializing Menu.");
 }
 
-- (void)cfPopOverInit
+- (void)_cfPopOverInit
 {
     NSLog(@"AppDelegate - Initializing CoverFlow11 PopOver ...");
     if(cfPopOverViewController == nil)
@@ -54,10 +62,11 @@
     NSLog(@"AppDelegate - Finished Initializing CoverFlow11 PopOver.");
 }
 
-- (void)showCFPopOver:(id)sender
+- (void)_showCFPopOver:(id)sender
 {
     NSLog(@"AppDelegate - Going to Show CoverFlow11 PopOver ...");
     [cfPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
 }
+
 
 @end

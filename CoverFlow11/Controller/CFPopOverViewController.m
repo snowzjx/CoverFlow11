@@ -121,7 +121,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:selectedCoverDoubleClickedNotification object:_cfView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:selectedCoverClickedNotification object:_cfView];
-    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:@"com.apple.iTunes.playInfo" object:nil];
+    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:@"com.apple.iTunes.playerInfo" object:nil];
 }
 
 - (void)_handleSelectedCoverDoubleClick:(NSNotification *)notification

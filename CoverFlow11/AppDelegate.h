@@ -19,8 +19,4 @@
     CFPopOverViewController *cfPopOverViewController;
 }
 
-- (void)menuInit;
-- (void)cfPopOverInit;
-- (void)showCFPopOver:(id)sender;
-
 @end
