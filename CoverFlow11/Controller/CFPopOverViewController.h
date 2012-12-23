@@ -10,7 +10,7 @@
 #import "iTunesAccess.h"
 @class CFView;
 
-@interface CFPopOverViewController : NSViewController<NSPopoverDelegate>
+@interface CFPopOverViewController : NSViewController <NSPopoverDelegate>
 {
     // iTunesAccess
     iTunesAccess *_iTunesAccess;
@@ -24,8 +24,14 @@
     IBOutlet CFView *_cfView;
 }
 
+@property(strong) IBOutlet NSButton *btnPlay;
+@property(strong) IBOutlet NSButton *btnNext;
+@property(strong) IBOutlet NSButton *btnPrev;
+@property(strong) IBOutlet NSSlider *soundVolumnSlider;
+
 - (IBAction)playBtnClick:(id)sender;
 - (IBAction)nextBtnClick:(id)sender;
 - (IBAction)prevBtnClick:(id)sender;
+- (IBAction)soundVolumnSliderChange:(id)sender;
 
 @end

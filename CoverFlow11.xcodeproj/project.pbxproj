@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		800572B6167C26D300054DF7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 800572B5167C26D300054DF7 /* QuartzCore.framework */; };
+		802B871B1686A1A5008B52C4 /* btnplay.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B871A1686A1A5008B52C4 /* btnplay.png */; };
+		802B871D1686A344008B52C4 /* btnplayhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B871C1686A344008B52C4 /* btnplayhighlight.png */; };
+		802B87201686A56C008B52C4 /* btnnext.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B871E1686A56C008B52C4 /* btnnext.png */; };
+		802B87211686A56C008B52C4 /* btnnexthighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B871F1686A56C008B52C4 /* btnnexthighlight.png */; };
+		802B87241686A719008B52C4 /* btnprev.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87221686A719008B52C4 /* btnprev.png */; };
+		802B87251686A719008B52C4 /* btnprevhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87231686A719008B52C4 /* btnprevhighlight.png */; };
+		802B87281686AE1D008B52C4 /* btnpause.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87261686AE1D008B52C4 /* btnpause.png */; };
+		802B87291686AE1D008B52C4 /* btnpausehighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87271686AE1D008B52C4 /* btnpausehighlight.png */; };
 		8042AB401684A891000B0A24 /* StatusItemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8042AB3F1684A891000B0A24 /* StatusItemIcon.png */; };
 		8042AB421684AAE5000B0A24 /* StatusItemIconHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8042AB411684AAE5000B0A24 /* StatusItemIconHighlight.png */; };
 		805D9D7C16777610006E97FE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805D9D7B16777610006E97FE /* Cocoa.framework */; };
@@ -26,6 +34,14 @@
 
 /* Begin PBXFileReference section */
 		800572B5167C26D300054DF7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		802B871A1686A1A5008B52C4 /* btnplay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnplay.png; path = Resources/btnplay.png; sourceTree = "<group>"; };
+		802B871C1686A344008B52C4 /* btnplayhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnplayhighlight.png; path = Resources/btnplayhighlight.png; sourceTree = "<group>"; };
+		802B871E1686A56C008B52C4 /* btnnext.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnnext.png; path = Resources/btnnext.png; sourceTree = "<group>"; };
+		802B871F1686A56C008B52C4 /* btnnexthighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnnexthighlight.png; path = Resources/btnnexthighlight.png; sourceTree = "<group>"; };
+		802B87221686A719008B52C4 /* btnprev.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnprev.png; path = Resources/btnprev.png; sourceTree = "<group>"; };
+		802B87231686A719008B52C4 /* btnprevhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnprevhighlight.png; path = Resources/btnprevhighlight.png; sourceTree = "<group>"; };
+		802B87261686AE1D008B52C4 /* btnpause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnpause.png; path = Resources/btnpause.png; sourceTree = "<group>"; };
+		802B87271686AE1D008B52C4 /* btnpausehighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnpausehighlight.png; path = Resources/btnpausehighlight.png; sourceTree = "<group>"; };
 		8042AB3F1684A891000B0A24 /* StatusItemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StatusItemIcon.png; path = Resources/StatusItemIcon.png; sourceTree = "<group>"; };
 		8042AB411684AAE5000B0A24 /* StatusItemIconHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = StatusItemIconHighlight.png; path = Resources/StatusItemIconHighlight.png; sourceTree = "<group>"; };
 		805D9D7716777610006E97FE /* CoverFlow11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoverFlow11.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +88,14 @@
 		8042AB3B1684A677000B0A24 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				802B871A1686A1A5008B52C4 /* btnplay.png */,
+				802B871C1686A344008B52C4 /* btnplayhighlight.png */,
+				802B87261686AE1D008B52C4 /* btnpause.png */,
+				802B87271686AE1D008B52C4 /* btnpausehighlight.png */,
+				802B871E1686A56C008B52C4 /* btnnext.png */,
+				802B871F1686A56C008B52C4 /* btnnexthighlight.png */,
+				802B87221686A719008B52C4 /* btnprev.png */,
+				802B87231686A719008B52C4 /* btnprevhighlight.png */,
 				8042AB3F1684A891000B0A24 /* StatusItemIcon.png */,
 				8042AB411684AAE5000B0A24 /* StatusItemIconHighlight.png */,
 			);
@@ -241,6 +265,14 @@
 				80A59D0F16777EC1009E993C /* CFPopOverView.xib in Resources */,
 				8042AB401684A891000B0A24 /* StatusItemIcon.png in Resources */,
 				8042AB421684AAE5000B0A24 /* StatusItemIconHighlight.png in Resources */,
+				802B871B1686A1A5008B52C4 /* btnplay.png in Resources */,
+				802B871D1686A344008B52C4 /* btnplayhighlight.png in Resources */,
+				802B87201686A56C008B52C4 /* btnnext.png in Resources */,
+				802B87211686A56C008B52C4 /* btnnexthighlight.png in Resources */,
+				802B87241686A719008B52C4 /* btnprev.png in Resources */,
+				802B87251686A719008B52C4 /* btnprevhighlight.png in Resources */,
+				802B87281686AE1D008B52C4 /* btnpause.png in Resources */,
+				802B87291686AE1D008B52C4 /* btnpausehighlight.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

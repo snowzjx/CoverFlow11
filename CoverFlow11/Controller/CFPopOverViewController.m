@@ -18,11 +18,13 @@
 - (void)_loadAlbumInfo;
 - (void)_setUpCFView;
 - (void)_updateCFView;
+- (void)_updateControls;
 
 - (void)_registerForNotifications;
 - (void)_unregisterForNotifications;
 - (void)_handleSelectedCoverDoubleClick:(NSNotification *)notification;
 - (void)_handleSelectedCoverClick:(NSNotification *)notification;
+- (void)_handleiTunesNotifications:(NSNotification *)notification;
 
 @end
 
@@ -78,6 +80,23 @@
     [_cfView setSelectedIndex:selectedIndex];
 }
 
+- (void)_updateControls
+{
+    if(_iTunesStatus == Stopped)
+    {
+        [_btnNext setEnabled:NO];
+        [_btnPrev setEnabled:NO];
+    }
+    if(_iTunesStatus == Playing)
+    {
+        [_btnNext setEnabled:YES];
+        [_btnNext setEnabled:YES];
+        [_btnPlay setImage:[NSImage imageNamed:@"btnpause"]];
+        [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnpausehighlight"]];
+    }
+    [_soundVolumnSlider setIntegerValue:_soundVolumn];
+}
+
 - (void)_registerForNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -88,12 +107,17 @@
                                              selector:@selector(_handleSelectedCoverClick:)
                                                  name:selectedCoverClickedNotification
                                                object:_cfView];
+    [[NSDistributedNotificationCenter defaultCenter] addObserver:self
+                                                        selector:@selector(_handleiTunesNotifications:)
+                                                            name:@"com.apple.iTunes.playerInfo"
+                                                          object:nil];
 }
 
 - (void)_unregisterForNotifications
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:selectedCoverDoubleClickedNotification object:_cfView];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:selectedCoverClickedNotification object:_cfView];
+    [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:@"com.apple.iTunes.playInfo" object:nil];
 }
 
 - (void)_handleSelectedCoverDoubleClick:(NSNotification *)notification
@@ -108,6 +132,34 @@
     NSLog(@"Unimplemented Function! Selected Index at: %ld",selectedIndex);
 }
 
+- (void)_handleiTunesNotifications:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    NSString *playerState = [userInfo valueForKey:@"Player State"];
+    if([playerState isEqualToString:@"Playing"])
+    {
+        [_btnPlay setImage:[NSImage imageNamed:@"btnpause"]];
+        [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnpausehighlight"]];
+    }
+    if([playerState isEqualToString:@"Paused"])
+    {
+        [_btnPlay setImage:[NSImage imageNamed:@"btnplay"]];
+        [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnplayhighlight"]];
+    }
+    NSString *albumName = [userInfo valueForKey:@"Album"];
+    NSInteger selectedIndex = 0;
+    for(int i = 0; i < [_albums count]; i++)
+    {
+        iTunesAlbum *album = [_albums objectAtIndex:i];
+        if([[album album] isEqualToString:albumName])
+        {
+            selectedIndex = i;
+            break;
+        }
+    }
+    [_cfView setSelectedIndex:selectedIndex];
+}
+
 - (void)popoverWillShow:(NSNotification *)notification
 {
     NSLog(@"CFPopOverViewController - Did Pop Over ...");
@@ -115,6 +167,7 @@
     [self _loadAlbumInfo];
     [self _setUpCFView];
     [self _updateCFView];
+    [self _updateControls];
     [self _registerForNotifications];
 }
 
@@ -139,5 +192,11 @@
 {
     [_iTunesAccess playPreviousTrack];
     [self _updateCFView];
+}
+
+- (void)soundVolumnSliderChange:(id)sender
+{
+    _soundVolumn = [_soundVolumnSlider integerValue];
+    [_iTunesAccess setSoundVolumn:_soundVolumn];
 }
 @end
