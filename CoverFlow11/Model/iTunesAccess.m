@@ -168,7 +168,6 @@
 {
     if(_library == nil)
     {
-        NSLog(@"iTunesAccess - Loading Library ...");
         NSPredicate *prdtLib = [NSPredicate predicateWithFormat:@"kind = %@",[NSAppleEventDescriptor descriptorWithTypeCode:iTunesESrcLibrary]];
         SBElementArray *sources = [_iTunes sources];
         _library = [[sources filteredArrayUsingPredicate:prdtLib] objectAtIndex:0];
@@ -179,7 +178,6 @@
 {
     if(_playList == nil)
     {
-        NSLog(@"iTunesAccess - Loading Play List ...");
         NSPredicate *prdtPlayList = [NSPredicate predicateWithFormat:@"specialKind = %@", [NSAppleEventDescriptor descriptorWithTypeCode:iTunesESpKMusic]];
         _playList = [[[_library playlists] filteredArrayUsingPredicate:prdtPlayList] objectAtIndex:0];
     }
@@ -190,7 +188,6 @@
     NSString *playListName = @"CoverFlow";
     if(_cfPlayList == nil)
     {
-        NSLog(@"iTunesAccess - Loading Cover Flow Play List ...");
         NSPredicate *prdtCFPlayList = [NSPredicate predicateWithFormat:@"name = %@", playListName];
         _cfPlayList = [[[_library playlists] filteredArrayUsingPredicate:prdtCFPlayList] objectAtIndex:0];
         if(![_cfPlayList exists])

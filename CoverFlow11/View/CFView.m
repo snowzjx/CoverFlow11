@@ -32,7 +32,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 #pragma awakeFromNib
 - (void)awakeFromNib
 {
-    NSLog(@"CFView - Awake From Nib ...");
     [self setWantsLayer:YES];
     [self _setUpTransforms];
     [self _setUpLayers];
@@ -41,7 +40,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 #pragma Property methods
 - (void)setContent:(NSArray *)content
 {
-    NSLog(@"CFView - Setting Content ...");
     if([_content isEqualToArray:content])
     {
         return;
@@ -56,7 +54,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex
 {
-    NSLog(@"CFView - Selected Index Been Set With Value: %ld !",selectedIndex);
     if(selectedIndex < 0)
     {
         return;
@@ -130,7 +127,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 #pragma Private methods
 - (void)_setUpLayers
 {
-    NSLog(@"CFView - Setting Up Layers ...");
     _rootLayer = [CALayer layer];
     [_rootLayer setName:@"RootLayer"];
     [_rootLayer setBackgroundColor:CGColorGetConstantColor(kCGColorBlack)];
@@ -168,9 +164,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 }
 
 - (void)_setUpTransforms
-{
-    NSLog(@"CFView - Setting Up Transformas ...");
-    
+{    
     CATransform3D scaleTransform = CATransform3DScale(CATransform3DIdentity, COVER_FLOW_SIDE_SCALE, 1.0f, 1.0f);
     
     // Transform - Rotation for the cover left to the center.
@@ -254,7 +248,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 {
     if(NSPointInRect(point, [self _rectOfItemAtIndex:_selectedIndex]))
     {
-        NSLog(@"CFView - Mouse Click On Item At: %ld", _selectedIndex);
         return _selectedIndex;
     }
     NSInteger index = _selectedIndex - 1;
@@ -262,7 +255,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     {
         if(NSPointInRect(point, [self _rectOfItemAtIndex:index]))
         {
-            NSLog(@"CFView - Mouse Click On Item At: %ld", index);
             return index;
         }
         index --;
@@ -272,7 +264,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     {
         if(NSPointInRect(point, [self _rectOfItemAtIndex:index]))
         {
-            NSLog(@"CFView - Mouse Click On Item At: %ld", index);
             return index;
         }
         index ++;
@@ -295,14 +286,12 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 
 - (void)_selectedLayerDoubleClicked
 {
-    NSLog(@"CFView - Selected Layer Double Clicked!");
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:_selectedIndex] forKey:@"SelectedIndex"];
     [[NSNotificationCenter defaultCenter] postNotificationName:selectedCoverDoubleClickedNotification object:self userInfo:userInfo];
 }
 
 - (void)_selectedLayerClicked
 {
-    NSLog(@"CFView - Selected Layer Single Clicked!");
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:_selectedIndex] forKey:@"SelectedIndex"];
     [[NSNotificationCenter defaultCenter] postNotificationName:selectedCoverClickedNotification object:self userInfo:userInfo];
 }
@@ -310,7 +299,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 #pragma Layout manager protocol
 - (void)layoutSublayersOfLayer:(CALayer *)layer
 {
-    NSLog(@"CFView - Layout Sub Layers ...");
     for(CALayer *subLayer in [layer sublayers])
     {
         NSInteger index  = [[subLayer valueForKey:@"index"] integerValue];

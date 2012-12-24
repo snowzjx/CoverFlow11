@@ -35,7 +35,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        NSLog(@"CFPopOverViewController - Initializing CFPopOverViewController ...");
         _iTunesAccess = [iTunesAccess sharediTunesAccess];
     }
     return self;
@@ -43,7 +42,6 @@
 
 - (void)_loadiTunesInfo
 {
-    NSLog(@"CFPopOverViewController - Loading iTunes Info ...");
     _soundVolumn = [_iTunesAccess getSoundVolumn];
     _iTunesStatus = [_iTunesAccess getiTunesState];
 }
@@ -52,7 +50,6 @@
 {
     if(_albums == nil)
     {
-        NSLog(@"CFPopOverViewController - Loading Album Info ...");
         _albums = [_iTunesAccess getCurrentAlbums];
     }
 }
@@ -64,7 +61,6 @@
 
 - (void)_setUpCFView
 {
-    NSLog(@"CFPopOverViewController - Setting Up Cover Flow View ...");
     NSArray *content = [_albums valueForKey:@"artWork"];
     [_cfView setContent:content];
 }
@@ -176,7 +172,6 @@
 
 - (void)popoverWillShow:(NSNotification *)notification
 {
-    NSLog(@"CFPopOverViewController - Did Pop Over ...");
     [self _loadiTunesInfo];
     [self _loadAlbumInfo];
     [self _loadCurrentInfo];
@@ -188,7 +183,6 @@
 
 - (void)popoverDidClose:(NSNotification *)notification
 {
-    NSLog(@"CFPopOverViewController - Pop Over Did Close");
     [self _unregisterForNotifications];
 }
 

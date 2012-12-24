@@ -9,13 +9,17 @@
 
 #import "AppDelegate.h"
 #import "CFPopOverViewController.h"
+#import "CFStatusItemView.h"
 
 @interface AppDelegate ()
 
 - (void)_menuInit;
+- (void)_statusItemInit;
 - (void)_cfPopOverInit;
 - (void)_showCFPopOver:(id)sender;
-
+- (void)_showAboutPanel:(id)sender;
+- (void)_showPreferencePanel:(id)sender;
+- (void)_quit:(id)sender;
 @end
 
 @implementation AppDelegate
@@ -25,24 +29,44 @@
     // Insert code here to initialize your application
     NSLog(@"AppDelegate - Application Initializing ...");
     [self _menuInit];
+    [self _statusItemInit];
     [self _cfPopOverInit];
 }
 
 - (void)_menuInit
 {
     NSLog(@"AppDelegate - Initializing Menu ...");
-    if(statusItem)
+    _menu = [[NSMenu alloc] initWithTitle:@"CoverFlow"];
+    [_menu addItemWithTitle:NSLocalizedString(@"About CoverFlow11", nil)
+                     action:@selector(_showAboutPanel:)
+              keyEquivalent:@""];
+    [_menu addItem:[NSMenuItem separatorItem]];
+    [_menu addItemWithTitle:NSLocalizedString(@"Preferences...", nil)
+                     action:@selector(_showPreferencePanel:)
+              keyEquivalent:@";"];
+    [_menu addItem:[NSMenuItem separatorItem]];
+    [_menu addItemWithTitle:NSLocalizedString(@"Quit CoverFlow11", nil)
+                     action:@selector(_quit:)
+              keyEquivalent:@"q"];
+}
+
+- (void)_statusItemInit
+{
+    NSLog(@"AppDelegate - Initializing Status Item ...");
+    if(_statusItem)
     {
-        [[NSStatusBar systemStatusBar] removeStatusItem:statusItem];
-        statusItem = nil;
+        [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
+        _statusItem = nil;
     }
-    statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:30.0f];
-    [statusItem setImage:[NSImage imageNamed:@"StatusItemIcon"]];
-    [statusItem setAlternateImage:[NSImage imageNamed:@"StatusItemIconHighlight"]];
-    [statusItem setHighlightMode:YES];
-    [statusItem setToolTip:@"CoverFlow11"];
-    [statusItem setAction:@selector(_showCFPopOver:)];
-    NSLog(@"AppDelegate - Finished Initializing Menu.");
+    _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
+    CFStatusItemView *statusItemView = [[CFStatusItemView alloc] initWithStatusBarItem:_statusItem];
+    [_statusItem setView:statusItemView];
+    [statusItemView setImage:[NSImage imageNamed:@"statusitemicon"]];
+    [statusItemView setAlternateImage:[NSImage imageNamed:@"statusitemiconhighlight"]];
+    [statusItemView setTarget:self];
+    [statusItemView setAction:@selector(_showCFPopOver:)];
+    [statusItemView setRightMenu:_menu];
+    [statusItemView setToolTip:@"CoverFlow11"];
 }
 
 - (void)_cfPopOverInit
@@ -52,21 +76,41 @@
     {
         cfPopOverViewController = [[CFPopOverViewController alloc] initWithNibName:@"CFPopOverView" bundle:nil];
     }
-    if(cfPopOver == nil)
+    if(_cfPopOver == nil)
     {
-        cfPopOver = [[NSPopover alloc] init];
+        _cfPopOver = [[NSPopover alloc] init];
     }
-    [cfPopOver setContentViewController:cfPopOverViewController];
-    [cfPopOver setBehavior:NSPopoverBehaviorTransient];
-    [cfPopOver setDelegate:cfPopOverViewController];
-    NSLog(@"AppDelegate - Finished Initializing CoverFlow11 PopOver.");
+    [_cfPopOver setContentViewController:cfPopOverViewController];
+    [_cfPopOver setBehavior:NSPopoverBehaviorTransient];
+    [_cfPopOver setDelegate:cfPopOverViewController];
 }
 
 - (void)_showCFPopOver:(id)sender
 {
     NSLog(@"AppDelegate - Going to Show CoverFlow11 PopOver ...");
-    [cfPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
+    [_cfPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
 }
 
+- (void)_showAboutPanel:(id)sender
+{
+    NSLog(@"AppDelegate - Showing About Panel ...");
+    [[NSApplication sharedApplication] orderFrontStandardAboutPanel:self];
+}
 
+- (void)_showPreferencePanel:(id)sender
+{
+    NSLog(@"AppDelegate - Showing Preference Panel ...");
+}
+
+- (void)_quit:(id)sender
+{
+    NSLog(@"AppDelegate - Quiting ...");
+    [[NSApplication sharedApplication] terminate:self];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification
+{
+    NSLog(@"AppDelegate - Application Will Terminate ...");
+    [[NSStatusBar systemStatusBar] removeStatusItem:_statusItem];
+}
 @end

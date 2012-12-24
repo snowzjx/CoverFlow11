@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  CoverFlow11
+
+  Created by Snow on 12-12-24.
+  Copyright (c) 2012年 Snow. All rights reserved.
+*/
+
+"About CoverFlow11" = "关于 CoverFlow11";
+"Preferences..." = "偏好设置...";
+"Quit CoverFlow11" = "退出 CoverFlow11";

@@ -12,8 +12,10 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 {
-    NSStatusItem *statusItem;
-    NSPopover *cfPopOver;
+    // Controls
+    NSStatusItem *_statusItem;
+    NSMenu *_menu;
+    NSPopover *_cfPopOver;
  
     // ViewControllers
     CFPopOverViewController *cfPopOverViewController;
