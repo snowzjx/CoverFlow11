@@ -16,6 +16,7 @@
 		802B87251686A719008B52C4 /* btnprevhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87231686A719008B52C4 /* btnprevhighlight.png */; };
 		802B87281686AE1D008B52C4 /* btnpause.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87261686AE1D008B52C4 /* btnpause.png */; };
 		802B87291686AE1D008B52C4 /* btnpausehighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87271686AE1D008B52C4 /* btnpausehighlight.png */; };
+		80551EF71689EA7800BA5459 /* CFImageDataSourceiTunes.m in Sources */ = {isa = PBXBuildFile; fileRef = 80551EF61689EA7800BA5459 /* CFImageDataSourceiTunes.m */; };
 		805D9D7C16777610006E97FE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805D9D7B16777610006E97FE /* Cocoa.framework */; };
 		805D9D8616777611006E97FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D8416777611006E97FE /* InfoPlist.strings */; };
 		805D9D8816777611006E97FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 805D9D8716777611006E97FE /* main.m */; };
@@ -31,6 +32,7 @@
 		80C3273E16887988002D1A59 /* statusitemicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 80C3273C16887988002D1A59 /* statusitemicon.png */; };
 		80C3273F16887988002D1A59 /* statusitemiconhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 80C3273D16887988002D1A59 /* statusitemiconhighlight.png */; };
 		80C3274C16888327002D1A59 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80C3274E16888327002D1A59 /* Localizable.strings */; };
+		80C3275A168896C3002D1A59 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 80C32759168896C3002D1A59 /* icon.icns */; };
 		80E4D14E167B7D68008721AA /* CFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E4D14D167B7D68008721AA /* CFView.m */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +46,9 @@
 		802B87231686A719008B52C4 /* btnprevhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnprevhighlight.png; path = Resources/btnprevhighlight.png; sourceTree = "<group>"; };
 		802B87261686AE1D008B52C4 /* btnpause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnpause.png; path = Resources/btnpause.png; sourceTree = "<group>"; };
 		802B87271686AE1D008B52C4 /* btnpausehighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnpausehighlight.png; path = Resources/btnpausehighlight.png; sourceTree = "<group>"; };
+		80551EF41689EA0200BA5459 /* CFImageDataSourceDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CFImageDataSourceDelegate.h; path = View/CFImageDataSourceDelegate.h; sourceTree = "<group>"; };
+		80551EF51689EA7800BA5459 /* CFImageDataSourceiTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFImageDataSourceiTunes.h; path = View/CFImageDataSourceiTunes.h; sourceTree = "<group>"; };
+		80551EF61689EA7800BA5459 /* CFImageDataSourceiTunes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFImageDataSourceiTunes.m; path = View/CFImageDataSourceiTunes.m; sourceTree = "<group>"; };
 		805D9D7716777610006E97FE /* CoverFlow11.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoverFlow11.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		805D9D7B16777610006E97FE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		805D9D7E16777610006E97FE /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -77,6 +82,7 @@
 		80C32743168880B9002D1A59 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = "zh-Hans"; path = "zh-Hans.lproj/Credits.rtf"; sourceTree = "<group>"; };
 		80C3274D16888327002D1A59 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		80C3274F1688832B002D1A59 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		80C32759168896C3002D1A59 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Resources/icon.icns; sourceTree = "<group>"; };
 		80E4D14C167B7D68008721AA /* CFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFView.h; path = View/CFView.h; sourceTree = "<group>"; };
 		80E4D14D167B7D68008721AA /* CFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFView.m; path = View/CFView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,6 +104,7 @@
 		8042AB3B1684A677000B0A24 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				80C32759168896C3002D1A59 /* icon.icns */,
 				80C3273C16887988002D1A59 /* statusitemicon.png */,
 				80C3273D16887988002D1A59 /* statusitemiconhighlight.png */,
 				802B871A1686A1A5008B52C4 /* btnplay.png */,
@@ -217,6 +224,9 @@
 				80A22D75167C411F00C66D42 /* CFViewConstant.h */,
 				8060E2771687642D007D6D0F /* CFStatusItemView.h */,
 				8060E2781687642D007D6D0F /* CFStatusItemView.m */,
+				80551EF41689EA0200BA5459 /* CFImageDataSourceDelegate.h */,
+				80551EF51689EA7800BA5459 /* CFImageDataSourceiTunes.h */,
+				80551EF61689EA7800BA5459 /* CFImageDataSourceiTunes.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -288,6 +298,7 @@
 				80C3273E16887988002D1A59 /* statusitemicon.png in Resources */,
 				80C3273F16887988002D1A59 /* statusitemiconhighlight.png in Resources */,
 				80C3274C16888327002D1A59 /* Localizable.strings in Resources */,
+				80C3275A168896C3002D1A59 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +316,7 @@
 				80E4D14E167B7D68008721AA /* CFView.m in Sources */,
 				80A22D84167C62AB00C66D42 /* iTunesAlbum.m in Sources */,
 				8060E2791687642D007D6D0F /* CFStatusItemView.m in Sources */,
+				80551EF71689EA7800BA5459 /* CFImageDataSourceiTunes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

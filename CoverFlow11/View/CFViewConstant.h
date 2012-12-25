@@ -32,7 +32,8 @@
 #define COVER_FLOW_ITEM_WIDTH 150.0f
 
 // Contant Values for Boost Cover Flow
-#define COVER_FLOW_INDEX_DELTA_VALUE 8
+#define COVER_FLOW_RENDER_INDEX_DELTA_VALUE 8
+#define COVER_FLOW_IMAGE_INDEX_DELTA_VALUE 12
 
 // Constant Values for Animation
 #define COVER_FLOW_ANIMATION_TIME_INTERVAL 0.5f

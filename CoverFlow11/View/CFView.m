@@ -13,7 +13,12 @@
 
 - (void)_setUpLayers;
 - (void)_setUpTransforms;
-- (void)_insertItemLayer:(NSImage *)image;
+- (void)_insertItemLayer:(NSString *)imageKey;
+
+- (void)_loadArtworkInto:(CALayer *)layer;
+- (void)_removeArtworkFrom:(CALayer *)layer;
+
+
 - (CGPoint)_positionOfSelectedItem;
 - (NSInteger)_indexOfItemAtPoint:(CGPoint)point;
 - (NSRect)_rectOfItemAtIndex:(NSInteger)index;
@@ -46,9 +51,9 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     }
     _content = content;
     [[_scrollLayer sublayers] makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-    for(NSImage *image in _content)
+    for(NSString *imageKey in _content)
     {
-        [self _insertItemLayer:image];
+        [self _insertItemLayer:imageKey];
     }
 }
 
@@ -180,14 +185,16 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     _reflectionTransform = CATransform3DScale(CATransform3DIdentity, 1.0f, -1.0f, 1.0f);
 }
 
-- (void)_insertItemLayer:(NSImage *)image
+- (void)_insertItemLayer:(NSString *)imageKey;
 {
     CALayer *itemRootLayer = [CALayer layer];
     [itemRootLayer setName:@"ItemRootLayer"];
     [itemRootLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT)];
     [itemRootLayer setLayoutManager:[CAConstraintLayoutManager layoutManager]];
     [itemRootLayer setAnchorPoint:CGPointMake(0.5f, 0.5f)];
-    [itemRootLayer setValue:[NSNumber numberWithInteger:[[_scrollLayer sublayers] count]] forKey:@"index"];
+    [itemRootLayer setValue:[NSNumber numberWithInteger:[[_scrollLayer sublayers] count]] forKey:@"Index"];
+    [itemRootLayer setValue:[NSNumber numberWithBool:NO] forKey:@"HasImage"];
+    [itemRootLayer setValue:imageKey forKey:@"ImageKey"];
     
     CAReplicatorLayer *replecatorLayer = [CAReplicatorLayer layer];
     [replecatorLayer setBounds:[itemRootLayer bounds]];
@@ -207,7 +214,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     CALayer *imageLayer = [CALayer layer];
     [imageLayer setName:@"ImageLayer"];
     [imageLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2)];
-    [imageLayer setContents:image];
     [imageLayer setContentsGravity:kCAGravityBottom];
     [imageLayer setContentsGravity:kCAGravityResizeAspect];
     [imageLayer addConstraint:[CAConstraint
@@ -239,6 +245,32 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     [itemRootLayer addSublayer:shadowLayer];
 }
 
+- (void)_loadArtworkInto:(CALayer *)layer
+{
+    BOOL hasImage = [[layer valueForKey:@"HasImage"] boolValue];
+    if(!hasImage)
+    {
+        NSString *imageKey = [layer valueForKey:@"ImageKey"];
+        NSData *imageData = [_imageDataSourceDelegate loadImageDataFromKey:imageKey];
+        CAReplicatorLayer *replecatorLayer = [[layer sublayers] objectAtIndex:0];
+        CALayer *imageLayer = [[replecatorLayer sublayers] objectAtIndex:0];
+        [imageLayer setContents:[[NSImage alloc] initWithData:imageData]];
+        [layer setValue:[NSNumber numberWithBool:YES] forKey:@"HasImage"];
+    }
+}
+
+- (void)_removeArtworkFrom:(CALayer *)layer
+{
+    BOOL hasImage = [[layer valueForKey:@"HasImage"] boolValue];
+    if(hasImage)
+    {
+        CAReplicatorLayer *replecatorLayer = [[layer sublayers] objectAtIndex:0];
+        CALayer *imageLayer = [[replecatorLayer sublayers] objectAtIndex:0];
+        [imageLayer setContents:nil];
+        [layer setValue:[NSNumber numberWithBool:NO] forKey:@"HasImage"];
+    }
+}
+
 - (CGPoint)_positionOfSelectedItem
 {
     return CGPointMake(_selectedIndex * COVER_FLOW_SPACING , COVER_FLOW_POSITION_Y);
@@ -251,7 +283,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
         return _selectedIndex;
     }
     NSInteger index = _selectedIndex - 1;
-    while(index >= _selectedIndex - COVER_FLOW_INDEX_DELTA_VALUE && index >= 0)
+    while(index >= _selectedIndex - COVER_FLOW_IMAGE_INDEX_DELTA_VALUE && index >= 0)
     {
         if(NSPointInRect(point, [self _rectOfItemAtIndex:index]))
         {
@@ -260,7 +292,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
         index --;
     }
     index = _selectedIndex + 1;
-    while(index <= _selectedIndex + COVER_FLOW_INDEX_DELTA_VALUE && index <= [_content count] - 1)
+    while(index <= _selectedIndex + COVER_FLOW_IMAGE_INDEX_DELTA_VALUE && index <= [_content count] - 1)
     {
         if(NSPointInRect(point, [self _rectOfItemAtIndex:index]))
         {
@@ -301,7 +333,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 {
     for(CALayer *subLayer in [layer sublayers])
     {
-        NSInteger index  = [[subLayer valueForKey:@"index"] integerValue];
+        NSInteger index  = [[subLayer valueForKey:@"Index"] integerValue];
         
         CATransform3D trans;
         CGPoint position = CGPointMake(index * COVER_FLOW_SPACING + COVER_FLOW_POSITION_LEFT_OFFSET, COVER_FLOW_POSITION_Y);
@@ -325,8 +357,18 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
             zPosition -= ABS(_selectedIndex - index) * COVER_FLOW_SIDE_ZDIS_FADE;
         }
         
+        /* -- Loads the image when necessray --*/
+        if(ABS(index - _selectedIndex) <= COVER_FLOW_IMAGE_INDEX_DELTA_VALUE)
+        {
+            [self _loadArtworkInto:subLayer];
+        }
+        else
+        {
+            [self _removeArtworkFrom:subLayer];
+        }
+        
         /* -- Remove unused layers from cflayer -- */
-        if(ABS(index - _selectedIndex) >= COVER_FLOW_INDEX_DELTA_VALUE)
+        if(ABS(index - _selectedIndex) >= COVER_FLOW_RENDER_INDEX_DELTA_VALUE)
         {
             [subLayer setHidden:YES];
         }

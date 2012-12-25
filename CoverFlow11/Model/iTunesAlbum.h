@@ -11,8 +11,6 @@
 @interface iTunesAlbum : NSObject
 
 @property(strong) NSString *album;
-@property(strong) NSImage *artWork;
-@property(strong) NSArray *trackNames;
 @property(strong) NSArray *tracks;
 
 @end

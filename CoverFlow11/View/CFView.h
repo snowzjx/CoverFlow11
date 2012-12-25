@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
+#import "CFImageDataSourceDelegate.h"
 
 @interface CFView : NSView
 {
@@ -25,6 +26,8 @@
 
 extern NSString * const selectedCoverDoubleClickedNotification;
 extern NSString * const selectedCoverClickedNotification;
+
+@property(strong) id<CFImageDataSourceDelegate> imageDataSourceDelegate;
 
 @property(nonatomic, copy) NSArray* content;
 

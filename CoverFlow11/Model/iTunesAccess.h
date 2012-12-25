@@ -38,6 +38,7 @@ typedef enum iTunesStatusEnum iTunesStatusEnum;
 
 - (iTunesTrack *)getCurrentTrack;
 - (NSArray *)getCurrentAlbums;
+- (NSData *)loadArtworkData:(NSString *)album;
 
 - (void)playAlbum:(iTunesAlbum *)album from:(NSInteger)index;
 

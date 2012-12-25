@@ -94,18 +94,19 @@
     NSArray *albumNames = [[_playList tracks] arrayByApplyingSelector:@selector(album)];
     NSArray *trackNames = [[_playList tracks] arrayByApplyingSelector:@selector(name)];
     
-    NSMutableDictionary *albumHelpDict = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *albumDict = [[NSMutableDictionary alloc] init];
+    
     for(int i = 0; i < [albumNames count]; i++)
     {
         NSString *albumName = [albumNames objectAtIndex:i];
         NSString *trackName = [trackNames objectAtIndex:i];
         
-        NSMutableArray *value = [albumHelpDict objectForKey:albumName];
+        NSMutableArray *value = [albumDict objectForKey:albumName];
         if(value == nil)
         {
             value = [[NSMutableArray alloc] init];
             [value addObject:trackName];
-            [albumHelpDict setObject:value forKey:albumName];
+            [albumDict setObject:value forKey:albumName];
         }
         else
         {
@@ -113,29 +114,34 @@
         }
     }
     
-    for(NSString *albumName in [albumHelpDict allKeys])
+    for(NSString *albumName in [albumDict allKeys])
     {
-        NSPredicate *prdtAlbum = [NSPredicate predicateWithFormat:@"album = %@",albumName];
-        NSArray *tracks = [[_playList tracks] filteredArrayUsingPredicate:prdtAlbum];
-        iTunesArtwork *artWork = [[[tracks objectAtIndex:0] artworks] lastObject];
-        NSImage *artWorkImage = [[NSImage alloc] initWithData:[artWork rawData]];
-        
         iTunesAlbum *album = [[iTunesAlbum alloc] init];
         [album setAlbum:albumName];
-        [album setArtWork:artWorkImage];
-        [album setTrackNames:[albumHelpDict objectForKey:albumName]];
-        [album setTracks:tracks];
+        [album setTracks:[albumDict objectForKey:albumName]];
         [albums addObject:album];
     }
+    
     return albums;
+}
+
+- (NSData *)loadArtworkData:(NSString *)album
+{
+    NSPredicate *prdtAlbum = [NSPredicate predicateWithFormat:@"album = %@",album];
+    NSArray *tracks = [[_playList tracks] filteredArrayUsingPredicate:prdtAlbum];
+    iTunesTrack *track = [tracks objectAtIndex:0];
+    iTunesArtwork *artwork = [[track artworks] lastObject];
+    return [artwork rawData];
 }
 
 - (void)playAlbum:(iTunesAlbum *)album from:(NSInteger)index
 {
     [[_cfPlayList tracks] removeAllObjects];
-    NSArray *tracks = [album tracks];
-    NSMutableArray *orderedTracks = [[NSMutableArray alloc] init];
     
+    NSPredicate *prdtAlbum = [NSPredicate predicateWithFormat:@"album = %@",[album album]];
+    NSArray *tracks = [[_playList tracks] filteredArrayUsingPredicate:prdtAlbum];
+    
+    NSMutableArray *orderedTracks = [[NSMutableArray alloc] init];
     for(NSInteger i = index; i < [tracks count]; i++)
     {
         [orderedTracks addObject:[tracks objectAtIndex:i]];

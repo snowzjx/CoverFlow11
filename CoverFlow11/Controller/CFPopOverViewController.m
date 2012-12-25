@@ -9,6 +9,7 @@
 #import "CFPopOverViewController.h"
 #import "CFView.h"
 #import "CFViewConstant.h"
+#import "CFImageDataSourceiTunes.h"
 #import "iTunesAccess.h"
 #import "iTunesAlbum.h"
 
@@ -61,7 +62,9 @@
 
 - (void)_setUpCFView
 {
-    NSArray *content = [_albums valueForKey:@"artWork"];
+    CFImageDataSourceiTunes *dataSource = [CFImageDataSourceiTunes sharedInstance];
+    [_cfView setImageDataSourceDelegate:dataSource];
+    NSArray *content = [_albums valueForKey:@"album"];
     [_cfView setContent:content];
 }
 
