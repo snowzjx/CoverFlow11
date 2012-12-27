@@ -16,6 +16,7 @@
 		802B87251686A719008B52C4 /* btnprevhighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87231686A719008B52C4 /* btnprevhighlight.png */; };
 		802B87281686AE1D008B52C4 /* btnpause.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87261686AE1D008B52C4 /* btnpause.png */; };
 		802B87291686AE1D008B52C4 /* btnpausehighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 802B87271686AE1D008B52C4 /* btnpausehighlight.png */; };
+		803105D0168C830A00A207DF /* defaultcover.png in Resources */ = {isa = PBXBuildFile; fileRef = 803105CF168C830A00A207DF /* defaultcover.png */; };
 		80551EF71689EA7800BA5459 /* CFImageDataSourceiTunes.m in Sources */ = {isa = PBXBuildFile; fileRef = 80551EF61689EA7800BA5459 /* CFImageDataSourceiTunes.m */; };
 		805D9D7C16777610006E97FE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805D9D7B16777610006E97FE /* Cocoa.framework */; };
 		805D9D8616777611006E97FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D8416777611006E97FE /* InfoPlist.strings */; };
@@ -46,6 +47,7 @@
 		802B87231686A719008B52C4 /* btnprevhighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnprevhighlight.png; path = Resources/btnprevhighlight.png; sourceTree = "<group>"; };
 		802B87261686AE1D008B52C4 /* btnpause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnpause.png; path = Resources/btnpause.png; sourceTree = "<group>"; };
 		802B87271686AE1D008B52C4 /* btnpausehighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnpausehighlight.png; path = Resources/btnpausehighlight.png; sourceTree = "<group>"; };
+		803105CF168C830A00A207DF /* defaultcover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = defaultcover.png; path = Resources/defaultcover.png; sourceTree = "<group>"; };
 		80551EF41689EA0200BA5459 /* CFImageDataSourceDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CFImageDataSourceDelegate.h; path = View/CFImageDataSourceDelegate.h; sourceTree = "<group>"; };
 		80551EF51689EA7800BA5459 /* CFImageDataSourceiTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFImageDataSourceiTunes.h; path = View/CFImageDataSourceiTunes.h; sourceTree = "<group>"; };
 		80551EF61689EA7800BA5459 /* CFImageDataSourceiTunes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFImageDataSourceiTunes.m; path = View/CFImageDataSourceiTunes.m; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				80C32759168896C3002D1A59 /* icon.icns */,
 				80C3273C16887988002D1A59 /* statusitemicon.png */,
 				80C3273D16887988002D1A59 /* statusitemiconhighlight.png */,
+				803105CF168C830A00A207DF /* defaultcover.png */,
 				802B871A1686A1A5008B52C4 /* btnplay.png */,
 				802B871C1686A344008B52C4 /* btnplayhighlight.png */,
 				802B87261686AE1D008B52C4 /* btnpause.png */,
@@ -299,6 +302,7 @@
 				80C3273F16887988002D1A59 /* statusitemiconhighlight.png in Resources */,
 				80C3274C16888327002D1A59 /* Localizable.strings in Resources */,
 				80C3275A168896C3002D1A59 /* icon.icns in Resources */,
+				803105D0168C830A00A207DF /* defaultcover.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

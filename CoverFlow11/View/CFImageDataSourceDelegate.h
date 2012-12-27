@@ -10,6 +10,6 @@
 
 @protocol CFImageDataSourceDelegate <NSObject>
 
-- (NSData *)loadImageDataFromKey:(NSString *)imageKey;
+- (NSImage *)loadImageFromKey:(NSString *)imageKey;
 
 @end

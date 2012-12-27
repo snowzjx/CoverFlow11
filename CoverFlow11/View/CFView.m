@@ -251,10 +251,10 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     if(!hasImage)
     {
         NSString *imageKey = [layer valueForKey:@"ImageKey"];
-        NSData *imageData = [_imageDataSourceDelegate loadImageDataFromKey:imageKey];
+        NSImage *image = [_imageDataSourceDelegate loadImageFromKey:imageKey];
         CAReplicatorLayer *replecatorLayer = [[layer sublayers] objectAtIndex:0];
         CALayer *imageLayer = [[replecatorLayer sublayers] objectAtIndex:0];
-        [imageLayer setContents:[[NSImage alloc] initWithData:imageData]];
+        [imageLayer setContents:image];
         [layer setValue:[NSNumber numberWithBool:YES] forKey:@"HasImage"];
     }
 }

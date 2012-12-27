@@ -27,13 +27,19 @@
     if(self)
     {
         _iTunesAccess = [iTunesAccess sharediTunesAccess];
+        _defaultArtwork = [NSImage imageNamed:@"defaultcover"];
     }
     return self;
 }
 
-- (NSData *)loadImageDataFromKey:(NSString *)imageKey
+- (NSImage *)loadImageFromKey:(NSString *)imageKey
 {
-    return [_iTunesAccess loadArtworkData:imageKey];
+    NSImage *image = [[NSImage alloc] initWithData:[_iTunesAccess loadArtworkData:imageKey]];
+    if(image == nil)
+    {
+        image = _defaultArtwork;
+    }
+    return image;
 }
 
 @end

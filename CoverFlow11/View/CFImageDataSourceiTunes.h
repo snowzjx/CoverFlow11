@@ -13,9 +13,10 @@
 @interface CFImageDataSourceiTunes : NSObject<CFImageDataSourceDelegate>
 {
     iTunesAccess *_iTunesAccess;
+    NSImage *_defaultArtwork;
 }
 
 + (CFImageDataSourceiTunes *) sharedInstance;
-- (NSData *)loadImageDataFromKey:(NSString *)imageKey;
+- (NSImage *)loadImageFromKey:(NSString *)imageKey;
 
 @end
