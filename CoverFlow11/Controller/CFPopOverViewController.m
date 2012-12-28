@@ -93,7 +93,7 @@
     if(_iTunesStatus == Playing)
     {
         [_btnNext setEnabled:YES];
-        [_btnNext setEnabled:YES];
+        [_btnPrev setEnabled:YES];
         [_btnPlay setImage:[NSImage imageNamed:@"btnpause"]];
         [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnpausehighlight"]];
     }
@@ -156,12 +156,16 @@
             _iTunesStatus = Playing;
             [_btnPlay setImage:[NSImage imageNamed:@"btnpause"]];
             [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnpausehighlight"]];
+            [_btnNext setEnabled:YES];
+            [_btnPrev setEnabled:YES];
         }
         if(stateEnum == Paused)
         {
             _iTunesStatus = Paused;
             [_btnPlay setImage:[NSImage imageNamed:@"btnplay"]];
             [_btnPlay setAlternateImage:[NSImage imageNamed:@"btnplayhighlight"]];
+            [_btnNext setEnabled:YES];
+            [_btnPrev setEnabled:YES];
         }
     }
     

@@ -17,6 +17,7 @@
 
 - (void)_loadArtworkInto:(CALayer *)layer;
 - (void)_removeArtworkFrom:(CALayer *)layer;
+- (NSImage *)_resizeImage:(NSImage *)image;
 
 
 - (CGPoint)_positionOfSelectedItem;
@@ -214,7 +215,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     CALayer *imageLayer = [CALayer layer];
     [imageLayer setName:@"ImageLayer"];
     [imageLayer setBounds:CGRectMake(0.0f, 0.0f, COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_HEIGHT / 2)];
-    [imageLayer setContentsGravity:kCAGravityBottom];
     [imageLayer setContentsGravity:kCAGravityResizeAspect];
     [imageLayer addConstraint:[CAConstraint
                                constraintWithAttribute:kCAConstraintMaxY
@@ -254,7 +254,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
         NSImage *image = [_imageDataSourceDelegate loadImageFromKey:imageKey];
         CAReplicatorLayer *replecatorLayer = [[layer sublayers] objectAtIndex:0];
         CALayer *imageLayer = [[replecatorLayer sublayers] objectAtIndex:0];
-        [imageLayer setContents:image];
+        [imageLayer setContents:[self _resizeImage:image]];
         [layer setValue:[NSNumber numberWithBool:YES] forKey:@"HasImage"];
     }
 }
@@ -269,6 +269,21 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
         [imageLayer setContents:nil];
         [layer setValue:[NSNumber numberWithBool:NO] forKey:@"HasImage"];
     }
+}
+
+- (NSImage *)_resizeImage:(NSImage *)image
+{
+    NSImage *newImage = [[NSImage alloc] initWithSize:NSMakeSize(COVER_FLOW_ITEM_WIDTH, COVER_FLOW_ITEM_WIDTH * image.size.height / image.size.width)];
+    
+    [newImage lockFocus];
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+    [NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithGraphicsPort:context flipped:NO]];
+    [image drawInRect:NSMakeRect(0.0, 0.0, newImage.size.width, newImage.size.height) fromRect:NSMakeRect(0.0, 0.0, image.size.width, image.size.height)
+            operation:NSCompositeCopy fraction:1.0f];
+    [newImage unlockFocus];
+    
+    return newImage;
 }
 
 - (CGPoint)_positionOfSelectedItem
