@@ -79,11 +79,6 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
 }
 
 #pragma NSEvent methods
-- (BOOL)acceptsFirstResponder
-{
-    return YES;
-}
-
 - (void)scrollWheel:(NSEvent *)theEvent
 {
     if (fabs([theEvent deltaX]) > SCROLLER_WHEEL_MINIMAL_DELTA_VALUE) {
@@ -115,13 +110,17 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     NSInteger selectedIndex = [self _indexOfItemAtPoint:mousePoint];
     if(selectedIndex != NSNotFound)
     {
-        if ([theEvent clickCount] == 2 && selectedIndex == _selectedIndex)
+        if (selectedIndex == _selectedIndex)
         {
-            [self _selectedLayerDoubleClicked];
-        }
-        else if(selectedIndex == _selectedIndex)
-        {
-            [self _selectedLayerClicked];
+            if([theEvent clickCount] == 2)
+            {
+                [NSRunLoop cancelPreviousPerformRequestsWithTarget:self selector:@selector(_selectedLayerClicked) object:nil];
+                [self _selectedLayerDoubleClicked];
+            }
+            else
+            {
+                [self performSelector:@selector(_selectedLayerClicked) withObject:nil afterDelay:[NSEvent doubleClickInterval]];
+            }
         }
         else
         {
@@ -255,6 +254,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
         CAReplicatorLayer *replecatorLayer = [[layer sublayers] objectAtIndex:0];
         CALayer *imageLayer = [[replecatorLayer sublayers] objectAtIndex:0];
         [imageLayer setContents:[self _resizeImage:image]];
+        image = nil;
         [layer setValue:[NSNumber numberWithBool:YES] forKey:@"HasImage"];
     }
 }

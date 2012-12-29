@@ -88,6 +88,7 @@
 - (void)_showCFPopOver:(id)sender
 {
     NSLog(@"AppDelegate - Going to Show CoverFlow11 PopOver ...");
+    [NSApp activateIgnoringOtherApps:YES];
     [_cfPopOver showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
 }
 
