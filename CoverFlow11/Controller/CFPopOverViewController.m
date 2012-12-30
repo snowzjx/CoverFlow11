@@ -10,8 +10,12 @@
 #import "CFView.h"
 #import "CFViewConstant.h"
 #import "CFImageDataSourceiTunes.h"
+#import "CFItemPopOverViewController.h"
+
 #import "iTunesAccess.h"
 #import "iTunesAlbum.h"
+
+#import "Color11.h"
 
 @interface CFPopOverViewController ()
 
@@ -21,6 +25,10 @@
 - (void)_setUpCFView;
 - (void)_updateCFView;
 - (void)_updateControls;
+
+- (void)_setUpCFItemPopOver:(iTunesAlbum *)album;
+- (void)_showCFItemPopOver;
+- (void)_hideCFItemPopOver;
 
 - (void)_registerForNotifications;
 - (void)_unregisterForNotifications;
@@ -35,7 +43,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if(self)
+    {
         _iTunesAccess = [iTunesAccess sharediTunesAccess];
     }
     return self;
@@ -100,6 +109,35 @@
     [_soundVolumnSlider setIntegerValue:_soundVolumn];
 }
 
+- (void)_setUpCFItemPopOver:(iTunesAlbum *)album
+{
+    if(_cfItemPopOverViewController == nil)
+    {
+        _cfItemPopOverViewController = [[CFItemPopOverViewController alloc] initWithNibName:@"CFItemPopOverView" bundle:nil];
+    }
+    if(_cfItemPopOver == nil)
+    {
+        _cfItemPopOver = [[NSPopover alloc] init];
+        [_cfItemPopOver setContentViewController:_cfItemPopOverViewController];
+        [_cfItemPopOver setBehavior:NSPopoverBehaviorTransient];
+        [_cfItemPopOver setAppearance:NSPopoverAppearanceHUD];
+        [_cfItemPopOver setDelegate:_cfItemPopOverViewController];
+    }
+    [_cfItemPopOverViewController setAlbum:album];
+}
+
+- (void)_showCFItemPopOver
+{
+    [_cfItemPopOver showRelativeToRect:NSMakeRect(0.0f, 50.0f, 500.0f, 200.0f) ofView:_cfView preferredEdge:NSMinYEdge];
+    [self addObserver:self forKeyPath:@"_cfView.selectedIndex" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)_hideCFItemPopOver
+{
+    [_cfItemPopOver close];
+    [self removeObserver:self forKeyPath:@"_cfView.selectedIndex"];
+}
+
 - (void)_registerForNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -132,7 +170,8 @@
 - (void)_handleSelectedCoverClick:(NSNotification *)notification
 {
     NSInteger  selectedIndex = [[[notification userInfo] valueForKey:@"SelectedIndex"] intValue];
-    NSLog(@"Unimplemented Function! Selected Index at: %ld",selectedIndex);
+    [self _setUpCFItemPopOver:[_albums objectAtIndex:selectedIndex]];
+    [self _showCFItemPopOver];
 }
 
 - (void)_handleiTunesNotifications:(NSNotification *)notification
@@ -174,6 +213,14 @@
     {
         _currentAlbumName = currentAlbumName;
         [self _updateCFView];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"_cfView.selectedIndex"])
+    {
+        [self _hideCFItemPopOver];
     }
 }
 

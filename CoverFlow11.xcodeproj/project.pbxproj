@@ -25,6 +25,8 @@
 		805D9D8F16777611006E97FE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 805D9D8E16777611006E97FE /* AppDelegate.m */; };
 		805D9D9216777611006E97FE /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 805D9D9016777611006E97FE /* MainMenu.xib */; };
 		8060E2791687642D007D6D0F /* CFStatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8060E2781687642D007D6D0F /* CFStatusItemView.m */; };
+		8088EE39168FE659004F4F5C /* Color11.m in Sources */ = {isa = PBXBuildFile; fileRef = 8088EE38168FE659004F4F5C /* Color11.m */; };
+		8088EE3F1690040E004F4F5C /* CFSongListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8088EE3E1690040E004F4F5C /* CFSongListView.m */; };
 		80A22D84167C62AB00C66D42 /* iTunesAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A22D83167C62AB00C66D42 /* iTunesAlbum.m */; };
 		80A59D0C16777E2D009E993C /* CFPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80A59D0B16777E2D009E993C /* CFPopOverViewController.m */; };
 		80A59D0F16777EC1009E993C /* CFPopOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80A59D1116777EC1009E993C /* CFPopOverView.xib */; };
@@ -35,6 +37,10 @@
 		80C3274C16888327002D1A59 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80C3274E16888327002D1A59 /* Localizable.strings */; };
 		80C3275A168896C3002D1A59 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 80C32759168896C3002D1A59 /* icon.icns */; };
 		80E4D14E167B7D68008721AA /* CFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E4D14D167B7D68008721AA /* CFView.m */; };
+		80E9D01E168F19EE006D5153 /* CFItemPopOverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E9D01D168F19EE006D5153 /* CFItemPopOverViewController.m */; };
+		80E9D021168F1A4F006D5153 /* CFItemPopOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 80E9D023168F1A4F006D5153 /* CFItemPopOverView.xib */; };
+		80E9D031168F32F4006D5153 /* NSColor+YUVSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E9D030168F32F4006D5153 /* NSColor+YUVSpace.m */; };
+		80E9D038168F3FBD006D5153 /* NSImage+Color11.m in Sources */ = {isa = PBXBuildFile; fileRef = 80E9D037168F3FBD006D5153 /* NSImage+Color11.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +72,12 @@
 		805D9D9116777611006E97FE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		8060E2771687642D007D6D0F /* CFStatusItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFStatusItemView.h; path = View/CFStatusItemView.h; sourceTree = "<group>"; };
 		8060E2781687642D007D6D0F /* CFStatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFStatusItemView.m; path = View/CFStatusItemView.m; sourceTree = "<group>"; };
+		8088EE37168FE659004F4F5C /* Color11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Color11.h; path = CoverFlow11/Model/Color11.h; sourceTree = "<group>"; };
+		8088EE38168FE659004F4F5C /* Color11.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Color11.m; path = CoverFlow11/Model/Color11.m; sourceTree = "<group>"; };
+		8088EE3C168FE9F8004F4F5C /* Color11Constant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Color11Constant.h; path = CoverFlow11/Model/Color11Constant.h; sourceTree = "<group>"; };
+		8088EE3D1690040E004F4F5C /* CFSongListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFSongListView.h; path = View/CFSongListView.h; sourceTree = "<group>"; };
+		8088EE3E1690040E004F4F5C /* CFSongListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFSongListView.m; path = View/CFSongListView.m; sourceTree = "<group>"; };
+		8088EE4016901E30004F4F5C /* CFSongListViewConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CFSongListViewConstant.h; path = View/CFSongListViewConstant.h; sourceTree = "<group>"; };
 		80A22D75167C411F00C66D42 /* CFViewConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CFViewConstant.h; path = View/CFViewConstant.h; sourceTree = "<group>"; };
 		80A22D82167C62AB00C66D42 /* iTunesAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iTunesAlbum.h; path = CoverFlow11/Model/iTunesAlbum.h; sourceTree = "<group>"; };
 		80A22D83167C62AB00C66D42 /* iTunesAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iTunesAlbum.m; path = CoverFlow11/Model/iTunesAlbum.m; sourceTree = "<group>"; };
@@ -87,6 +99,14 @@
 		80C32759168896C3002D1A59 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Resources/icon.icns; sourceTree = "<group>"; };
 		80E4D14C167B7D68008721AA /* CFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFView.h; path = View/CFView.h; sourceTree = "<group>"; };
 		80E4D14D167B7D68008721AA /* CFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFView.m; path = View/CFView.m; sourceTree = "<group>"; };
+		80E9D01C168F19EE006D5153 /* CFItemPopOverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CFItemPopOverViewController.h; path = Controller/CFItemPopOverViewController.h; sourceTree = "<group>"; };
+		80E9D01D168F19EE006D5153 /* CFItemPopOverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CFItemPopOverViewController.m; path = Controller/CFItemPopOverViewController.m; sourceTree = "<group>"; };
+		80E9D022168F1A4F006D5153 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CFItemPopOverView.xib; sourceTree = "<group>"; };
+		80E9D024168F1A5E006D5153 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/CFItemPopOverView.xib"; sourceTree = "<group>"; };
+		80E9D02F168F32F4006D5153 /* NSColor+YUVSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor+YUVSpace.h"; path = "Category/NSColor+YUVSpace.h"; sourceTree = "<group>"; };
+		80E9D030168F32F4006D5153 /* NSColor+YUVSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor+YUVSpace.m"; path = "Category/NSColor+YUVSpace.m"; sourceTree = "<group>"; };
+		80E9D036168F3FBD006D5153 /* NSImage+Color11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage+Color11.h"; path = "Category/NSImage+Color11.h"; sourceTree = "<group>"; };
+		80E9D037168F3FBD006D5153 /* NSImage+Color11.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSImage+Color11.m"; path = "Category/NSImage+Color11.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +187,7 @@
 				805D9D8D16777611006E97FE /* AppDelegate.h */,
 				805D9D8E16777611006E97FE /* AppDelegate.m */,
 				80A59D1216778347009E993C /* Model */,
+				80E9D02D168F32C5006D5153 /* Category */,
 				80A59D0916777DDA009E993C /* Controller */,
 				80E4D14A167B7D49008721AA /* View */,
 				80A59D0316777B8C009E993C /* User Interface */,
@@ -193,6 +214,7 @@
 			children = (
 				805D9D9016777611006E97FE /* MainMenu.xib */,
 				80A59D1116777EC1009E993C /* CFPopOverView.xib */,
+				80E9D023168F1A4F006D5153 /* CFItemPopOverView.xib */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -202,6 +224,8 @@
 			children = (
 				80A59D0A16777E2D009E993C /* CFPopOverViewController.h */,
 				80A59D0B16777E2D009E993C /* CFPopOverViewController.m */,
+				80E9D01C168F19EE006D5153 /* CFItemPopOverViewController.h */,
+				80E9D01D168F19EE006D5153 /* CFItemPopOverViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -214,6 +238,9 @@
 				80A59D1416778374009E993C /* iTunesAccess.m */,
 				80A22D82167C62AB00C66D42 /* iTunesAlbum.h */,
 				80A22D83167C62AB00C66D42 /* iTunesAlbum.m */,
+				8088EE37168FE659004F4F5C /* Color11.h */,
+				8088EE38168FE659004F4F5C /* Color11.m */,
+				8088EE3C168FE9F8004F4F5C /* Color11Constant.h */,
 			);
 			name = Model;
 			path = ..;
@@ -230,8 +257,22 @@
 				80551EF41689EA0200BA5459 /* CFImageDataSourceDelegate.h */,
 				80551EF51689EA7800BA5459 /* CFImageDataSourceiTunes.h */,
 				80551EF61689EA7800BA5459 /* CFImageDataSourceiTunes.m */,
+				8088EE3D1690040E004F4F5C /* CFSongListView.h */,
+				8088EE3E1690040E004F4F5C /* CFSongListView.m */,
+				8088EE4016901E30004F4F5C /* CFSongListViewConstant.h */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		80E9D02D168F32C5006D5153 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				80E9D02F168F32F4006D5153 /* NSColor+YUVSpace.h */,
+				80E9D030168F32F4006D5153 /* NSColor+YUVSpace.m */,
+				80E9D036168F3FBD006D5153 /* NSImage+Color11.h */,
+				80E9D037168F3FBD006D5153 /* NSImage+Color11.m */,
+			);
+			name = Category;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,6 +344,7 @@
 				80C3274C16888327002D1A59 /* Localizable.strings in Resources */,
 				80C3275A168896C3002D1A59 /* icon.icns in Resources */,
 				803105D0168C830A00A207DF /* defaultcover.png in Resources */,
+				80E9D021168F1A4F006D5153 /* CFItemPopOverView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +363,11 @@
 				80A22D84167C62AB00C66D42 /* iTunesAlbum.m in Sources */,
 				8060E2791687642D007D6D0F /* CFStatusItemView.m in Sources */,
 				80551EF71689EA7800BA5459 /* CFImageDataSourceiTunes.m in Sources */,
+				80E9D01E168F19EE006D5153 /* CFItemPopOverViewController.m in Sources */,
+				80E9D031168F32F4006D5153 /* NSColor+YUVSpace.m in Sources */,
+				80E9D038168F3FBD006D5153 /* NSImage+Color11.m in Sources */,
+				8088EE39168FE659004F4F5C /* Color11.m in Sources */,
+				8088EE3F1690040E004F4F5C /* CFSongListView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +417,15 @@
 				80C3274F1688832B002D1A59 /* zh-Hans */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		80E9D023168F1A4F006D5153 /* CFItemPopOverView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				80E9D022168F1A4F006D5153 /* en */,
+				80E9D024168F1A5E006D5153 /* zh-Hans */,
+			);
+			name = CFItemPopOverView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

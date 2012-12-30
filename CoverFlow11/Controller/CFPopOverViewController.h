@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "iTunesAccess.h"
 @class CFView;
+@class CFItemPopOverViewController;
 
 @interface CFPopOverViewController : NSViewController <NSPopoverDelegate>
 {
@@ -23,6 +24,10 @@
     
     // Cover Flow View
     IBOutlet CFView *_cfView;
+    
+    // Cover Flow Item Song List View & Controller;
+    NSPopover *_cfItemPopOver;
+    CFItemPopOverViewController *_cfItemPopOverViewController;
 }
 
 @property(strong) IBOutlet NSButton *btnPlay;
