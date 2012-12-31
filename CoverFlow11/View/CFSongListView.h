@@ -18,7 +18,10 @@
     CAScrollLayer *_scrollLayer;
     
     NSInteger _scrollIndex;
+    NSInteger _selectedIndex;
 }
+
+extern NSString * const selectedSongDoubleClickedNotification;
 
 @property(nonatomic, assign) NSString *album;
 @property(nonatomic, assign) NSArray *tracks;
@@ -26,6 +29,7 @@
 @property(nonatomic, assign) NSColor *primaryTextColor;
 @property(nonatomic, assign) NSColor *secondaryTextColor;
 
-- (void)showCFSongList;
+- (void)cfSongListShow;
+- (void)cfSongListClose;
 
 @end

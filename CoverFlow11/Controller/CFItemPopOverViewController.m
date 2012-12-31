@@ -17,6 +17,10 @@
 - (void)_color11Album;
 - (void)_setUpCFSongListView;
 
+- (void)_registerForNotifications;
+- (void)_unregisterForNotifications;
+- (void)_handleSelectedSongDoubleClick:(NSNotification *)notification;
+
 @end
 
 @implementation CFItemPopOverViewController
@@ -59,14 +63,38 @@
     [_cfSongListView setSecondaryTextColor:_secondaryTextColor];
 }
 
+- (void)_registerForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_handleSelectedSongDoubleClick:)
+                                                 name:selectedSongDoubleClickedNotification
+                                               object:_cfSongListView];
+}
+- (void)_unregisterForNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:selectedSongDoubleClickedNotification
+                                                  object:_cfSongListView];
+}
+
+- (void)_handleSelectedSongDoubleClick:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    NSInteger selectedIndex = [[userInfo objectForKey:@"SelectedIndex"] integerValue];
+    [_iTunesAccess playAlbum:_album from:selectedIndex];
+}
+
 - (void)popoverWillShow:(NSNotification *)notification
 {
     [self _setUpCFSongListView];
-    [_cfSongListView showCFSongList];
+    [_cfSongListView cfSongListShow];
+    [self _registerForNotifications];
 }
 
 - (void)popoverDidClose:(NSNotification *)notification
 {
-    
+    [_cfSongListView cfSongListClose];
+    [self _unregisterForNotifications];
 }
+
 @end
