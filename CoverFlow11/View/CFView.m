@@ -35,7 +35,7 @@
 NSString * const selectedCoverDoubleClickedNotification = @"CF_Selected_Cover_Double_Clicked";
 NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked";
 
-#pragma awakeFromNib
+#pragma mark awakeFromNib
 - (void)awakeFromNib
 {
     [self setWantsLayer:YES];
@@ -43,7 +43,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     [self _setUpLayers];
 }
 
-#pragma Property methods
+#pragma mark Property methods
 - (void)setContent:(NSArray *)content
 {
     if([_content isEqualToArray:content])
@@ -78,7 +78,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     [_scrollLayer scrollToPoint:[self _positionOfSelectedItem]];
 }
 
-#pragma NSEvent methods
+#pragma mark NSEvent methods
 - (void)scrollWheel:(NSEvent *)theEvent
 {
     if (fabs([theEvent deltaX]) > SCROLLER_WHEEL_MINIMAL_DELTA_VALUE) {
@@ -129,7 +129,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     }
 }
 
-#pragma Private methods
+#pragma mark Private methods
 - (void)_setUpLayers
 {
     _rootLayer = [CALayer layer];
@@ -343,7 +343,7 @@ NSString * const selectedCoverClickedNotification = @"CF_Selected_Cover_Clicked"
     [[NSNotificationCenter defaultCenter] postNotificationName:selectedCoverClickedNotification object:self userInfo:userInfo];
 }
 
-#pragma Layout manager protocol
+#pragma mark Layout manager protocol
 - (void)layoutSublayersOfLayer:(CALayer *)layer
 {
     for(CALayer *subLayer in [layer sublayers])
