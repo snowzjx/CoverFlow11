@@ -18,7 +18,7 @@
 @property(nonatomic, strong) NSImage *image;
 @property(nonatomic, strong) NSImage *alternateImage;
 
-@property(nonatomic, strong) id target;
+@property(weak) id target;
 @property(nonatomic, assign) SEL action;
 @property(nonatomic, assign) NSMenu *rightMenu;
 

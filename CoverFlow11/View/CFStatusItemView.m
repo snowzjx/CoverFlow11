@@ -78,7 +78,7 @@
     }
     else
     {
-        [NSApp sendAction:_action to:_target from:self];
+        [NSApp sendAction:fraction to:_target from:self];
     }
     
     _isMouseDown = NO;
